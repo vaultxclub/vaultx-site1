@@ -28,9 +28,7 @@ body {
   color: #fff;
   font-weight: 600;
 }
-.nav a:hover {
-  color: #d4af37;
-}
+.nav a:hover { color: #d4af37; }
 
 /* CONTAINER & CARDS */
 .container {
@@ -48,19 +46,9 @@ body {
 }
 
 /* HERO */
-.hero {
-  text-align: center;
-  padding: 60px 20px;
-}
-.hero h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
-}
-.hero p {
-  color: #ccc;
-  font-size: 18px;
-  line-height: 1.6;
-}
+.hero { text-align: center; padding: 60px 20px; }
+.hero h1 { font-size: 36px; margin-bottom: 10px; }
+.hero p { color: #ccc; font-size: 18px; line-height: 1.6; }
 
 /* BUTTONS */
 .btn {
@@ -73,9 +61,7 @@ body {
   text-decoration: none;
   margin-top: 20px;
 }
-.btn:hover {
-  opacity: 0.9;
-}
+.btn:hover { opacity: 0.9; }
 .btn.secondary {
   background: transparent;
   border: 1px solid #d4af37;
@@ -83,19 +69,13 @@ body {
 }
 
 /* TABLE */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
+.table { width: 100%; border-collapse: collapse; margin-top: 10px; }
 .table th, .table td {
   border: 1px solid rgba(255,255,255,0.1);
   padding: 10px;
   text-align: center;
 }
-.table th {
-  background: rgba(255,255,255,0.1);
-}
+.table th { background: rgba(255,255,255,0.1); }
 
 /* FOOTER PREMIUM */
 .footer {
@@ -120,9 +100,7 @@ body {
   margin: 0 5px;
   font-weight: 600;
 }
-.footer-links a:hover {
-  color: #fff;
-}
+.footer-links a:hover { color: #fff; }
 .footer-legal {
   font-size: 13px;
   color: #888;
