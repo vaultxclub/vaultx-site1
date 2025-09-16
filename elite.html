@@ -3,88 +3,54 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VaultX Elite</title>
+  <title>VaultX Club Elite</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
-
-  <!-- Config -->
   <script src="assets/config.js"></script>
 </head>
 <body>
-  <!-- Navbar -->
   <div class="nav">
     <div class="logo">VAULTX</div>
     <div>
       <a href="index.html">Home</a>
       <a href="calculator.html">Calculator</a>
-      <a href="elite.html">Elite</a>
+      <a href="elite.html" class="active">Elite</a>
       <a href="rules.html">Rules</a>
       <a href="faq.html">FAQ</a>
       <a href="join.html">Join</a>
     </div>
   </div>
 
-  <!-- HERO -->
-  <div class="container">
-    <div class="hero">
-      <h1>👑 VaultX Club Elite</h1>
-      <p>
-        The VIP layer of VaultX – designed for those who want<br>
-        <b>exclusive benefits, daily raffles, and premium community access</b>.
-      </p>
-      <a class="btn" href="join.html">🚀 Join VaultX Elite</a>
-    </div>
-  </div>
-
-  <!-- Benefits -->
   <div class="container">
     <div class="card">
-      <h2>✨ Elite Membership Benefits</h2>
-      <ul style="line-height:1.8; font-size:16px;">
-        <li>Exclusive access to <b>daily raffles</b> worth <b><span id="raffle"></span> USDT</b> each.</li>
-        <li>1 raffle prize for every <b><span id="perMembers"></span></b> active Elite members.</li>
-        <li>Monthly subscription: <b><span id="elitePrice"></span> USDT</b>.</li>
-        <li>Option to pay subscription directly from monthly profits.</li>
-        <li>Access to VIP VaultX community – networking, education & private updates.</li>
-        <li>Priority support from VaultX team.</li>
+      <h2>👑 VaultX Elite</h2>
+      <p>Exclusive benefits for Elite members:</p>
+      <ul>
+        <li>Subscription: <b><span id="elitePrice"></span> USDT/month</b></li>
+        <li>Daily raffle prize: <b><span id="raffle"></span> USDT</b></li>
+        <li>1 prize for every <b><span id="perMembers"></span></b> active members</li>
       </ul>
-    </div>
-  </div>
-
-  <!-- Example -->
-  <div class="container">
-    <div class="card">
-      <h2>📌 How It Works</h2>
-      <p style="font-size:16px; line-height:1.8;">
-        If VaultX Elite has <b>120 members</b> → 1 daily raffle of <span id="raffle2"></span> USDT.<br><br>
-        If it grows to <b>240 members</b> → 2 raffles of <span id="raffle3"></span> USDT each.<br><br>
-        At <b>360 members</b> → 3 raffles, and so on.
-      </p>
     </div>
   </div>
 
   <!-- Footer -->
   <div class="footer">
-    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="join.html">Join</a>
-    <br><br>
-    <small id="legal"></small>
+    <div class="footer-logo">VaultX Investment Club</div>
+    <div class="footer-links">
+      <a href="rules.html">Rules</a> •
+      <a href="faq.html">FAQ</a> •
+      <a href="join.html">Join</a>
+    </div>
+    <div class="footer-legal">
+      <small id="legal"></small>
+    </div>
   </div>
 
-  <!-- Script -->
   <script>
-    // Elite data from config.js
     document.getElementById("elitePrice").textContent = ELITE_PRICE;
     document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
     document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
-    document.getElementById("raffle2").textContent = ELITE_RAFFLE_PRIZE_USDT;
-    document.getElementById("raffle3").textContent = ELITE_RAFFLE_PRIZE_USDT;
-
-    // Footer
-    document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("legal").textContent = LEGAL_BANNER;
   </script>
 </body>

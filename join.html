@@ -5,17 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Join VaultX</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
-
-  <!-- Config -->
   <script src="assets/config.js"></script>
 </head>
 <body>
-  <!-- Navbar -->
   <div class="nav">
     <div class="logo">VAULTX</div>
     <div>
@@ -24,52 +18,31 @@
       <a href="elite.html">Elite</a>
       <a href="rules.html">Rules</a>
       <a href="faq.html">FAQ</a>
-      <a href="join.html">Join</a>
+      <a href="join.html" class="active">Join</a>
     </div>
   </div>
 
-  <!-- HERO -->
   <div class="container">
-    <div class="hero">
-      <h1>🚀 Join VaultX Club</h1>
-      <p>
-        Become part of the most exclusive investment club.<br>
-        <b>100 USDT minimum</b> to start. Safe, structured, and global.
-      </p>
-    </div>
-  </div>
-
-  <!-- CTA Section -->
-  <div class="container">
-    <div class="card" style="text-align:center;">
-      <h2>✅ How to Join</h2>
-      <p style="font-size:16px; line-height:1.8;">
-        1. Join our official Telegram channel for updates.<br>
-        2. Contact VaultX CEO directly to confirm your membership.<br>
-        3. Choose your investment tier and start earning passive income.<br>
-      </p>
-      <br>
-      <a class="btn" id="telegramChannel" target="_blank">📲 Join Official VaultX Channel</a>
-      <br><br>
-      <a class="btn secondary" id="telegramContact" target="_blank">🤝 Contact VaultX CEO</a>
+    <div class="card">
+      <h2>🚀 Join VaultX</h2>
+      <p>Instructions on how to join VaultX Club.</p>
     </div>
   </div>
 
   <!-- Footer -->
   <div class="footer">
-    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="faq.html">FAQ</a>
-    <br><br>
-    <small id="legal"></small>
+    <div class="footer-logo">VaultX Investment Club</div>
+    <div class="footer-links">
+      <a href="rules.html">Rules</a> •
+      <a href="faq.html">FAQ</a> •
+      <a href="join.html">Join</a>
+    </div>
+    <div class="footer-legal">
+      <small id="legal"></small>
+    </div>
   </div>
 
-  <!-- Script -->
   <script>
-    // Fill Telegram links
-    document.getElementById("telegramChannel").href = TELEGRAM_CHANNEL;
-    document.getElementById("telegramContact").href = TELEGRAM_CONTACT;
-
-    // Footer
-    document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("legal").textContent = LEGAL_BANNER;
   </script>
 </body>
