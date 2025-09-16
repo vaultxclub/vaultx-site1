@@ -34,7 +34,7 @@
       <h1>VaultX Investment Club</h1>
       <p>
         The private club where elite investors grow their wealth.<br>
-        <b>Smart, risk-managed growth for ambitious members.</b><br>
+        Earn <b>10% to 40% monthly returns</b> with guaranteed capital protection.*<br>
         Exclusive. Transparent. Global.
       </p>
       <a class="btn" href="join.html">🚀 Become a Member</a>
@@ -45,10 +45,10 @@
   <div class="container">
     <div class="card">
       <h2>📊 Investment Tiers</h2>
-      <p>Choose your entry capital and see how your monthly profits could scale:</p>
+      <p>Choose your entry capital and see how your monthly profits scale:</p>
       <table class="table">
         <thead>
-          <tr><th>Capital (USDT)</th><th>Indicative Monthly Growth (%)</th></tr>
+          <tr><th>Capital (USDT)</th><th>Gross Monthly Profit (%)</th></tr>
         </thead>
         <tbody id="tiers"></tbody>
       </table>
@@ -73,20 +73,14 @@
 
   <!-- Footer -->
   <div class="footer">
-    <div class="footer-logo">VaultX Investment Club</div>
-    <div class="footer-links">
-      <a href="rules.html">Rules</a> •
-      <a href="faq.html">FAQ</a> •
-      <a href="join.html">Join</a>
-    </div>
-    <div class="footer-legal">
-      <small id="legal"></small>
-    </div>
+    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="join.html">Join</a>
+    <br><br>
+    <small id="legal"></small>
   </div>
 
-  <!-- Page Script -->
+  <!-- Script -->
   <script>
-    // Fill tiers table
+    // Fill table tiers
     const tbody = document.getElementById("tiers");
     VAULTX_TIERS.forEach(t=>{
       const tr = document.createElement("tr");
@@ -99,7 +93,8 @@
     document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
     document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
 
-    // Footer legal
+    // Footer
+    document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("legal").textContent = LEGAL_BANNER;
   </script>
 </body>

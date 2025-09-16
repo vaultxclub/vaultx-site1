@@ -3,46 +3,129 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VaultX Rules</title>
+  <title>VaultX Official Rules</title>
 
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
+
+  <!-- Config -->
   <script src="assets/config.js"></script>
 </head>
 <body>
+  <!-- Navbar -->
   <div class="nav">
     <div class="logo">VAULTX</div>
     <div>
       <a href="index.html">Home</a>
       <a href="calculator.html">Calculator</a>
       <a href="elite.html">Elite</a>
-      <a href="rules.html" class="active">Rules</a>
+      <a href="rules.html">Rules</a>
       <a href="faq.html">FAQ</a>
       <a href="join.html">Join</a>
     </div>
   </div>
 
+  <!-- HERO -->
+  <div class="container">
+    <div class="hero">
+      <h1>📜 VaultX Official Rules</h1>
+      <p>
+        By joining VaultX, every member agrees to the following<br>
+        rules, principles, and code of conduct.
+      </p>
+    </div>
+  </div>
+
+  <!-- Sections -->
   <div class="container">
     <div class="card">
-      <h2>⚖️ VaultX Rules</h2>
-      <p>Write your membership and platform rules here.</p>
+      <h2>1. General Principles</h2>
+      <ul>
+        <li>VaultX Investment Club is a private members-only investment club.</li>
+        <li>Minimum entry capital: <b>100 USDT</b>.</li>
+        <li>The initial capital remains <b>locked</b> during membership.</li>
+        <li>Initial capital is guaranteed and refunded only in case of <b>fund losses</b> or club closure.</li>
+        <li>If a member has already withdrawn profits higher than their initial capital, the initial capital will not be refunded upon exit.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>2. Profits & Fees</h2>
+      <ul>
+        <li>Gross monthly profits range between <b>10% – 40%</b> depending on tier.</li>
+        <li>Management fee: <b>10%</b> of gross profits.</li>
+        <li>Withdrawal fee: <b>10%</b> applied to monthly withdrawals.</li>
+        <li>Early withdrawals are possible with an extra <b>20%</b> fee.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>3. Withdrawals & Compounding</h2>
+      <ul>
+        <li>Withdrawals can be made once per month, at month-end.</li>
+        <li>Unclaimed profits are automatically carried forward.</li>
+        <li>Members may choose to reinvest (compound) their profits to upgrade to a higher tier.</li>
+        <li>Reinvested capital becomes locked and is no longer covered by the initial capital guarantee.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>4. VaultX Club Elite</h2>
+      <ul>
+        <li>Monthly subscription: <b><span id="elitePrice"></span> USDT</b>.</li>
+        <li>Daily raffles: <b><span id="raffle"></span> USDT</b> each.</li>
+        <li>1 raffle for every <b><span id="perMembers"></span></b> active Elite members.</li>
+        <li>Subscription can be paid directly from monthly profits.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>5. Referral Program</h2>
+      <ul>
+        <li>Referral bonus: <b>10%</b> of the first deposit made by each referred member.</li>
+        <li>Paid within 72h after deposit confirmation.</li>
+        <li>Extra bonus: +10 USDT if the referred member also joins Elite.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>6. Code of Conduct</h2>
+      <ul>
+        <li>VaultX is an elitist club – respect, discretion, and integrity are mandatory.</li>
+        <li>Spam, self-promotion, or unethical behavior is strictly forbidden.</li>
+        <li>Members violating the rules may be excluded without refund of capital or profits.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>7. Final Provisions</h2>
+      <ul>
+        <li>The initial capital is guaranteed only in case of fund losses or club closure.</li>
+        <li>VaultX administration reserves the right to update these rules with prior notice.</li>
+        <li>By joining, every member confirms they have read and accepted these rules.</li>
+      </ul>
     </div>
   </div>
 
   <!-- Footer -->
   <div class="footer">
-    <div class="footer-logo">VaultX Investment Club</div>
-    <div class="footer-links">
-      <a href="rules.html">Rules</a> •
-      <a href="faq.html">FAQ</a> •
-      <a href="join.html">Join</a>
-    </div>
-    <div class="footer-legal">
-      <small id="legal"></small>
-    </div>
+    © <span id="year"></span> VaultX • <a href="faq.html">FAQ</a> • <a href="join.html">Join</a>
+    <br><br>
+    <small id="legal"></small>
   </div>
 
+  <!-- Script -->
   <script>
+    // Fill Elite data
+    document.getElementById("elitePrice").textContent = ELITE_PRICE;
+    document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
+    document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
+
+    // Footer
+    document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("legal").textContent = LEGAL_BANNER;
   </script>
 </body>
