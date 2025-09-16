@@ -5,21 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX Investment Club</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
-
-  <!-- Config -->
   <script src="assets/config.js"></script>
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- NAVBAR -->
   <div class="nav">
     <div class="logo">VAULTX</div>
     <div>
-      <a href="index.html">Home</a>
+      <a href="index.html" class="active">Home</a>
       <a href="calculator.html">Calculator</a>
       <a href="elite.html">Elite</a>
       <a href="rules.html">Rules</a>
@@ -34,7 +29,7 @@
       <h1>VaultX Investment Club</h1>
       <p>
         The private club where elite investors grow their wealth.<br>
-        Earn <b>10% to 40% monthly returns</b> with guaranteed capital protection.*<br>
+        <b>Smart, risk-managed growth for ambitious members.</b><br>
         Exclusive. Transparent. Global.
       </p>
       <a class="btn" href="join.html">🚀 Become a Member</a>
@@ -45,10 +40,10 @@
   <div class="container">
     <div class="card">
       <h2>📊 Investment Tiers</h2>
-      <p>Choose your entry capital and see how your monthly profits scale:</p>
+      <p>Choose your entry capital and see how your monthly profits could scale:</p>
       <table class="table">
         <thead>
-          <tr><th>Capital (USDT)</th><th>Gross Monthly Profit (%)</th></tr>
+          <tr><th>Capital (USDT)</th><th>Indicative Monthly Growth (%)</th></tr>
         </thead>
         <tbody id="tiers"></tbody>
       </table>
@@ -71,16 +66,28 @@
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <div class="footer">
-    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="join.html">Join</a>
-    <br><br>
-    <small id="legal"></small>
+    <div class="footer-brand">
+      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37" width="20" height="20">
+        <path d="M12 2l3 5.2 6 .8-4.3 4.3L18.4 19 12 15.8 5.6 19l1.7-6.7L3 8l6-.8z"/>
+      </svg>
+      <span class="footer-logo">VaultX Investment Club</span>
+    </div>
+
+    <div class="footer-links">
+      <a href="rules.html">Rules</a> •
+      <a href="faq.html">FAQ</a> •
+      <a href="join.html">Join</a>
+    </div>
+
+    <div class="footer-legal">
+      <small id="legal"></small>
+    </div>
   </div>
 
-  <!-- Script -->
   <script>
-    // Fill table tiers
+    // Tiers table
     const tbody = document.getElementById("tiers");
     VAULTX_TIERS.forEach(t=>{
       const tr = document.createElement("tr");
@@ -93,8 +100,7 @@
     document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
     document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
 
-    // Footer
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // Legal text
     document.getElementById("legal").textContent = LEGAL_BANNER;
   </script>
 </body>

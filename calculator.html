@@ -3,24 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VaultX Profit Calculator</title>
+  <title>VaultX Calculator</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
-
-  <!-- Config -->
   <script src="assets/config.js"></script>
+  <script src="assets/app.js"></script>
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- NAVBAR -->
   <div class="nav">
     <div class="logo">VAULTX</div>
     <div>
       <a href="index.html">Home</a>
-      <a href="calculator.html">Calculator</a>
+      <a href="calculator.html" class="active">Calculator</a>
       <a href="elite.html">Elite</a>
       <a href="rules.html">Rules</a>
       <a href="faq.html">FAQ</a>
@@ -28,89 +24,36 @@
     </div>
   </div>
 
-  <!-- HERO -->
-  <div class="container">
-    <div class="hero">
-      <h1>VaultX Profit Calculator</h1>
-      <p>
-        Enter your investment amount and instantly see your expected<br>
-        <b>gross and net monthly returns</b>, after management & withdrawal fees.
-      </p>
-
-      <!-- Input -->
-      <input id="capitalInput" type="number" placeholder="Enter your capital (e.g. 1000)" 
-             style="padding:14px; width:60%; font-size:18px; border-radius:8px; border:none; margin-top:20px; text-align:center;">
-
-      <!-- Button -->
-      <br>
-      <button class="btn" onclick="calcProfit()" style="font-size:18px; margin-top:20px;">Calculate</button>
-
-      <!-- Result -->
-      <div id="result" style="margin-top:30px; font-size:18px; line-height:1.8;"></div>
-    </div>
-  </div>
-
-  <!-- Tiers -->
+  <!-- CALCULATOR -->
   <div class="container">
     <div class="card">
-      <h2>📊 Official Investment Tiers</h2>
-      <p>These are the official tiers of VaultX, with their gross monthly profit rates:</p>
-      <table class="table">
-        <thead>
-          <tr><th>Capital (USDT)</th><th>Gross Monthly Profit (%)</th></tr>
-        </thead>
-        <tbody id="tiers"></tbody>
-      </table>
+      <h2>📈 Profit Calculator</h2>
+      <p>Estimate your potential monthly returns based on your capital:</p>
+      <div id="calculator"></div>
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <div class="footer">
-    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="join.html">Join</a>
-    <br><br>
-    <small id="legal"></small>
+    <div class="footer-brand">
+      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37" width="20" height="20">
+        <path d="M12 2l3 5.2 6 .8-4.3 4.3L18.4 19 12 15.8 5.6 19l1.7-6.7L3 8l6-.8z"/>
+      </svg>
+      <span class="footer-logo">VaultX Investment Club</span>
+    </div>
+
+    <div class="footer-links">
+      <a href="rules.html">Rules</a> •
+      <a href="faq.html">FAQ</a> •
+      <a href="join.html">Join</a>
+    </div>
+
+    <div class="footer-legal">
+      <small id="legal"></small>
+    </div>
   </div>
 
-  <!-- Script -->
   <script>
-    // Fill tiers table
-    const tbody = document.getElementById("tiers");
-    VAULTX_TIERS.forEach(t=>{
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${t.capital}</td><td>${(t.pct*100).toFixed(0)}%</td>`;
-      tbody.appendChild(tr);
-    });
-
-    // Calculator function
-    function calcProfit() {
-      const capital = parseFloat(document.getElementById("capitalInput").value);
-      if (isNaN(capital) || capital <= 0) {
-        document.getElementById("result").innerHTML = "⚠️ Please enter a valid amount (100, 250, 500, 1000, 2500, 5000, 10000).";
-        return;
-      }
-
-      const tier = VAULTX_TIERS.find(t => capital == t.capital);
-      if (!tier) {
-        document.getElementById("result").innerHTML = "⚠️ The amount entered does not match an official VaultX tier.";
-        return;
-      }
-
-      const grossProfit = capital * tier.pct;
-      const afterMgmt = grossProfit * (1 - MGMT_FEE);
-      const netProfit = afterMgmt * (1 - WITHDRAW_FEE);
-
-      document.getElementById("result").innerHTML = `
-        <div style="background:rgba(255,215,0,0.05); border:1px solid rgba(255,215,0,0.3); border-radius:10px; padding:20px; text-align:left;">
-          <b>Capital:</b> ${capital} USDT<br>
-          <b>Gross Monthly Profit:</b> ${grossProfit.toFixed(2)} USDT (${(tier.pct*100).toFixed(0)}%)<br>
-          <b>After Management Fee (10%):</b> ${afterMgmt.toFixed(2)} USDT<br>
-          <b>Net Profit (after 10% withdrawal fee):</b> <span style="color:#FFD700; font-weight:600;">${netProfit.toFixed(2)} USDT</span>
-        </div>
-      `;
-    }
-
-    // Footer
-    document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("legal").textContent = LEGAL_BANNER;
   </script>
 </body>
