@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VaultX Investment Club</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- Config -->
+  <script src="assets/config.js"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="nav">
+    <div class="logo">VAULTX</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="calculator.html">Calculator</a>
+      <a href="elite.html">Elite</a>
+      <a href="rules.html">Rules</a>
+      <a href="faq.html">FAQ</a>
+      <a href="join.html">Join</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="container">
+    <div class="hero">
+      <h1>VaultX Investment Club</h1>
+      <p>
+        The private club where elite investors grow their wealth.<br>
+        Earn <b>10% to 40% monthly returns</b> with guaranteed capital protection.*<br>
+        Exclusive. Transparent. Global.
+      </p>
+      <a class="btn" href="join.html">🚀 Become a Member</a>
+    </div>
+  </div>
+
+  <!-- Investment Tiers -->
+  <div class="container">
+    <div class="card">
+      <h2>📊 Investment Tiers</h2>
+      <p>Choose your entry capital and see how your monthly profits scale:</p>
+      <table class="table">
+        <thead>
+          <tr><th>Capital (USDT)</th><th>Gross Monthly Profit (%)</th></tr>
+        </thead>
+        <tbody id="tiers"></tbody>
+      </table>
+      <a class="btn secondary" href="calculator.html">Calculate My Returns</a>
+    </div>
+  </div>
+
+  <!-- Elite Section -->
+  <div class="container">
+    <div class="card">
+      <h2>👑 VaultX Club Elite</h2>
+      <p>Upgrade to the VIP layer of VaultX and unlock daily raffles + exclusive perks:</p>
+      <ul>
+        <li>Elite Subscription: <b><span id="elitePrice"></span> USDT/month</b></li>
+        <li>Daily raffle: <b><span id="raffle"></span> USDT</b> per prize</li>
+        <li>1 prize for every <b><span id="perMembers"></span></b> active members</li>
+        <li>Pay directly from your monthly profits</li>
+      </ul>
+      <a class="btn" href="elite.html">Discover Elite</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="join.html">Join</a>
+    <br><br>
+    <small id="legal"></small>
+  </div>
+
+  <!-- Script -->
+  <script>
+    // Fill table tiers
+    const tbody = document.getElementById("tiers");
+    VAULTX_TIERS.forEach(t=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${t.capital}</td><td>${(t.pct*100).toFixed(0)}%</td>`;
+      tbody.appendChild(tr);
+    });
+
+    // Elite info
+    document.getElementById("elitePrice").textContent = ELITE_PRICE;
+    document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
+    document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
+
+    // Footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("legal").textContent = LEGAL_BANNER;
+  </script>
+</body>
+</html>
