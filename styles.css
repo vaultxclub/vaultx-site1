@@ -1,0 +1,165 @@
+/* ========== VAULTX LUXURY THEME ========== */
+:root{
+  --vx-bg:#000;
+  --vx-text:#fff;
+  --vx-muted:#c9c9c9;
+  --vx-gold:#d4af37;
+  --vx-gold-soft:#b9962f;
+  --vx-border:rgba(255,255,255,0.12);
+  --vx-container:1200px;
+}
+
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--vx-bg);
+  color:var(--vx-text);
+  font-family:Montserrat,system-ui,Arial,sans-serif
+}
+
+a{color:var(--vx-text);text-decoration:none}
+a:hover{opacity:.9}
+
+.vx-container{
+  width:100%;
+  max-width:var(--vx-container);
+  margin:0 auto;
+  padding:0 20px
+}
+
+/* NAV */
+.vx-nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:linear-gradient(180deg,rgba(0,0,0,.9),rgba(0,0,0,.6));
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--vx-border)
+}
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:64px
+}
+.brand{
+  font-family:"Playfair Display",serif;
+  font-weight:900;
+  letter-spacing:.5px
+}
+.vx-menu{
+  display:flex;
+  gap:22px;
+  align-items:center
+}
+.vx-burger{
+  display:none;
+  background:none;
+  border:0;
+  cursor:pointer
+}
+.vx-burger span{
+  display:block;
+  width:22px;
+  height:2px;
+  background:#fff;
+  margin:5px 0
+}
+
+/* HERO */
+.vx-hero{
+  position:relative;
+  min-height:86vh;
+  display:grid;
+  place-items:center;
+  overflow:hidden
+}
+.vx-hero-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(1000px 600px at 20% 20%, rgba(212,175,55,0.1), transparent 60%),
+    radial-gradient(1000px 600px at 80% 60%, rgba(212,175,55,0.08), transparent 60%)
+}
+.vx-hero-gradient{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 70%, #000 100%)
+}
+.hero-inner{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:96px 0
+}
+.vx-title{
+  font-family:"Playfair Display",serif;
+  font-weight:900;
+  font-size:clamp(36px,6vw,64px);
+  line-height:1.05;
+  letter-spacing:.6px
+}
+.vx-subtitle{
+  color:var(--vx-muted);
+  margin:14px auto 24px;
+  max-width:720px;
+  font-size:clamp(16px,2.2vw,18px)
+}
+.vx-cta{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  margin-top:12px
+}
+.vx-badges{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-top:28px;
+  flex-wrap:wrap
+}
+.vx-badges span{
+  border:1px solid var(--vx-border);
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:13px;
+  opacity:.9
+}
+
+/* BUTTONS */
+.btn-primary,.btn-ghost{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 20px;
+  border-radius:999px;
+  border:1px solid transparent;
+  font-weight:600;
+  transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--vx-gold),var(--vx-gold-soft));
+  color:#000;
+  box-shadow:0 6px 18px rgba(212,175,55,0.25)
+}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{border-color:var(--vx-border);background:transparent}
+
+/* MOBILE NAV */
+@media (max-width:900px){
+  .vx-menu{
+    display:none;
+    position:absolute;
+    top:64px;
+    right:14px;
+    background:#0b0b0b;
+    border:1px solid var(--vx-border);
+    border-radius:14px;
+    padding:12px;
+    flex-direction:column;
+    min-width:200px
+  }
+  .vx-burger{display:block}
+  .vx-menu.open{display:flex}
+}
