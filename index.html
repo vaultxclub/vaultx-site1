@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX Investment Club</title>
 
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
+
+  <!-- Config -->
   <script src="assets/config.js"></script>
 </head>
 <body>
@@ -43,7 +48,7 @@
       <p>Choose your entry capital and see how your monthly profits could scale:</p>
       <table class="table">
         <thead>
-          <tr><th>Capital (USDT)</th><th>Indicative Monthly Growth (%)</th></tr>
+          <tr><th>Capital (USDT)</th><th>Expected Monthly Growth (%)</th></tr>
         </thead>
         <tbody id="tiers"></tbody>
       </table>
@@ -86,8 +91,9 @@
     </div>
   </div>
 
+  <!-- Page Script -->
   <script>
-    // Tiers table
+    // Fill tiers table dynamically
     const tbody = document.getElementById("tiers");
     VAULTX_TIERS.forEach(t=>{
       const tr = document.createElement("tr");
@@ -95,7 +101,7 @@
       tbody.appendChild(tr);
     });
 
-    // Elite info
+    // Fill elite info
     document.getElementById("elitePrice").textContent = ELITE_PRICE;
     document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
     document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;

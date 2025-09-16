@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX Club Elite</title>
 
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
+
+  <!-- Config -->
   <script src="assets/config.js"></script>
 </head>
 <body>
@@ -23,7 +28,7 @@
     </div>
   </div>
 
-  <!-- ELITE INFO -->
+  <!-- ELITE SECTION -->
   <div class="container">
     <div class="card">
       <h2>👑 VaultX Elite</h2>
@@ -32,6 +37,7 @@
         <li>Subscription: <b><span id="elitePrice"></span> USDT/month</b></li>
         <li>Daily raffle prize: <b><span id="raffle"></span> USDT</b></li>
         <li>1 prize for every <b><span id="perMembers"></span></b> active members</li>
+        <li>Pay directly from your monthly profits</li>
       </ul>
     </div>
   </div>
@@ -56,6 +62,7 @@
     </div>
   </div>
 
+  <!-- Script to load values -->
   <script>
     document.getElementById("elitePrice").textContent = ELITE_PRICE;
     document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;

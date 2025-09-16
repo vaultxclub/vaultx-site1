@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX Calculator</title>
 
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
+
+  <!-- Config & App -->
   <script src="assets/config.js"></script>
   <script src="assets/app.js"></script>
 </head>
@@ -28,8 +33,11 @@
   <div class="container">
     <div class="card">
       <h2>📈 Profit Calculator</h2>
-      <p>Estimate your potential monthly returns based on your capital:</p>
-      <div id="calculator"></div>
+      <p>Estimate your potential monthly returns based on your capital and fees:</p>
+
+      <div id="calculator">
+        <!-- This will be filled dynamically by app.js -->
+      </div>
     </div>
   </div>
 
@@ -53,6 +61,7 @@
     </div>
   </div>
 
+  <!-- Legal text -->
   <script>
     document.getElementById("legal").textContent = LEGAL_BANNER;
   </script>
