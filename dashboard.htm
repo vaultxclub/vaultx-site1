@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VaultX Dashboard</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- Config & Supabase -->
+  <script src="assets/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <div class="nav">
+    <div class="logo">VAULTX</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="calculator.html">Calculator</a>
+      <a href="elite.html">Elite</a>
+      <a href="rules.html">Rules</a>
+      <a href="faq.html">FAQ</a>
+      <a href="join.html">Join</a>
+      <a href="dashboard.html" class="active">Dashboard</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="container">
+    <div class="hero">
+      <h1>📊 My VaultX Dashboard</h1>
+      <p>Welcome back, <span id="userEmail" style="color:#FFD700"></span>!</p>
+      <button class="btn secondary" onclick="logout()" style="margin-top:15px;">Logout</button>
+    </div>
+  </div>
+
+  <!-- USER DATA -->
+  <div class="container">
+    <div class="card" style="max-width:600px;margin:0 auto;">
+      <h2>💼 Investment Overview</h2>
+      <p><b>Current Capital:</b> <span id="capital">-</span> USDT</p>
+      <p><b>Current Tier:</b> <span id="tier">-</span></p>
+      <p><b>Expected Monthly Profit:</b> <span id="profit">-</span> USDT</p>
+      <p><b>Elite Member:</b> <span id="elite">-</span></p>
+    </div>
+
+    <div class="card" style="max-width:600px;margin:20px auto;">
+      <h2>🔐 Account Info</h2>
+      <p><b>Email:</b> <span id="emailInfo">-</span></p>
+      <p><b>Joined on:</b> <span id="joined">-</span></p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-brand">
+      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37" width="20" height="20">
+        <path d="M12 2l3 5.2 6 .8-4.3 4.3L18.4 19 12 15.8 5.6 19l1.7-6.7L3 8l6-.8z"/>
+      </svg>
+      <span class="footer-logo">VaultX Investment Club</span>
+    </div>
+
+    <div class="footer-links">
+      <a href="rules.html">Rules</a> •
+      <a href="faq.html">FAQ</a> •
+      <a href="join.html">Join</a>
+    </div>
+
+    <div class="footer-legal">
+      <small id="legal"></small>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    document.getElementById("legal").textContent = LEGAL_BANNER;
+
+    async function loadUser() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+      document.getElementById("userEmail").textContent = user.email;
+      document.getElementById("emailInfo").textContent = user.email;
+      document.getElementById("joined").textContent = new Date(user.created_at).toLocaleDateString();
+
+      // ⚡ Example static data — replace with real DB table values later
+      const exampleCapital = 1000;
+      const tier = VAULTX_TIERS.find(t => t.capital === exampleCapital);
+      document.getElementById("capital").textContent = exampleCapital;
+      document.getElementById("tier").textContent = tier ? `${tier.capital} USDT` : "-";
+      document.getElementById("profit").textContent = tier ? (exampleCapital * tier.pct).toFixed(2) : "-";
+      document.getElementById("elite").textContent = "No";
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href = "login.html";
+    }
+
+    loadUser();
+  </script>
+</body>
+</html>

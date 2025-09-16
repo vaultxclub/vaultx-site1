@@ -11,8 +11,9 @@
   <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Config -->
+  <!-- Config & Supabase -->
   <script src="assets/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <!-- NAVBAR -->
@@ -25,22 +26,32 @@
       <a href="rules.html">Rules</a>
       <a href="faq.html">FAQ</a>
       <a href="join.html">Join</a>
+      <a href="login.html" class="active">Login</a>
     </div>
   </div>
 
-  <!-- LOGIN SECTION -->
+  <!-- HERO -->
   <div class="container">
-    <div class="card">
-      <h2>🔐 Member Login</h2>
-      <p>Log in to your VaultX account:</p>
-      <form>
-        <label>Email</label><br>
-        <input type="email" style="width:100%;padding:10px;margin:8px 0;"><br>
-        <label>Password</label><br>
-        <input type="password" style="width:100%;padding:10px;margin:8px 0;"><br>
-        <button type="submit" class="btn">Login</button>
-      </form>
-      <p style="margin-top:15px;font-size:14px;color:#999;">Access is currently limited to registered members only.</p>
+    <div class="hero">
+      <h1>🔐 Member Login</h1>
+      <p>Access your private VaultX member dashboard.</p>
+    </div>
+  </div>
+
+  <!-- LOGIN FORM -->
+  <div class="container">
+    <div class="card" style="max-width:480px;margin:20px auto;text-align:left;">
+      <label>Email</label>
+      <input id="email" type="email" placeholder="Enter your email"
+             style="width:100%;padding:12px;border-radius:8px;border:none;margin:8px 0">
+      
+      <label>Password</label>
+      <input id="password" type="password" placeholder="Enter your password"
+             style="width:100%;padding:12px;border-radius:8px;border:none;margin:8px 0">
+      
+      <button class="btn" onclick="login()">Sign in</button>
+      <button class="btn secondary" onclick="signup()" style="margin-left:8px;">Create account</button>
+      <div id="msg" style="margin-top:12px;color:#FFD700;font-weight:600"></div>
     </div>
   </div>
 
@@ -64,9 +75,33 @@
     </div>
   </div>
 
-  <!-- Legal text -->
+  <!-- SCRIPT -->
   <script>
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     document.getElementById("legal").textContent = LEGAL_BANNER;
+
+    async function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        document.getElementById("msg").textContent = "⚠️ " + error.message;
+      } else {
+        document.getElementById("msg").textContent = "✅ Success. Redirecting...";
+        setTimeout(()=>location.href="dashboard.html", 800);
+      }
+    }
+
+    async function signup() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        document.getElementById("msg").textContent = "⚠️ " + error.message;
+      } else {
+        document.getElementById("msg").textContent = "📩 Check your email to confirm your account.";
+      }
+    }
   </script>
 </body>
 </html>

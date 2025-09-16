@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Join VaultX</title>
 
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
+
+  <!-- Config -->
   <script src="assets/config.js"></script>
 </head>
 <body>
@@ -25,15 +30,22 @@
 
   <!-- JOIN SECTION -->
   <div class="container">
+    <div class="hero">
+      <h1>🚀 Join VaultX</h1>
+      <p>
+        Become part of the most exclusive investment club.<br>
+        Follow these steps to get started:
+      </p>
+    </div>
+
     <div class="card">
-      <h2>🚀 Join VaultX</h2>
-      <p>Follow these steps to become a VaultX Club member:</p>
-      <ol>
+      <ol style="line-height:1.8; font-size:16px;">
         <li>Fill in the registration form provided by our team.</li>
         <li>Deposit your starting capital (<b>minimum 100 USDT</b>).</li>
         <li>Get access to our private Telegram community and your member dashboard.</li>
       </ol>
-      <p>If you have any questions, contact us via Telegram:</p>
+
+      <p style="margin-top:20px;">If you have any questions, contact us via Telegram:</p>
       <a class="btn" href="#" onclick="window.open(TELEGRAM_CONTACT)">📩 Contact VaultX Support</a>
     </div>
   </div>
@@ -58,6 +70,7 @@
     </div>
   </div>
 
+  <!-- Script -->
   <script>
     document.getElementById("legal").textContent = LEGAL_BANNER;
   </script>

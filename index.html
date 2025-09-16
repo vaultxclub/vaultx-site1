@@ -34,7 +34,7 @@
       <h1>VaultX Investment Club</h1>
       <p>
         The private club where elite investors grow their wealth.<br>
-        <b>Smart, risk-managed growth for ambitious members.</b><br>
+        Earn <b>10% to 40% monthly returns</b> with guaranteed capital protection.*<br>
         Exclusive. Transparent. Global.
       </p>
       <a class="btn" href="join.html">🚀 Become a Member</a>
@@ -45,10 +45,10 @@
   <div class="container">
     <div class="card">
       <h2>📊 Investment Tiers</h2>
-      <p>Choose your entry capital and see how your monthly profits could scale:</p>
+      <p>Choose your entry capital and see how your monthly profits scale:</p>
       <table class="table">
         <thead>
-          <tr><th>Capital (USDT)</th><th>Expected Monthly Growth (%)</th></tr>
+          <tr><th>Capital (USDT)</th><th>Gross Monthly Profit (%)</th></tr>
         </thead>
         <tbody id="tiers"></tbody>
       </table>
@@ -91,9 +91,9 @@
     </div>
   </div>
 
-  <!-- Page Script -->
+  <!-- Script -->
   <script>
-    // Fill tiers table dynamically
+    // Fill table tiers
     const tbody = document.getElementById("tiers");
     VAULTX_TIERS.forEach(t=>{
       const tr = document.createElement("tr");
@@ -101,12 +101,12 @@
       tbody.appendChild(tr);
     });
 
-    // Fill elite info
+    // Elite info
     document.getElementById("elitePrice").textContent = ELITE_PRICE;
     document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
     document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
 
-    // Legal text
+    // Legal
     document.getElementById("legal").textContent = LEGAL_BANNER;
   </script>
 </body>
