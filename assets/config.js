@@ -29,5 +29,5 @@ const VAULTX_TIERS = [
 const MGMT_FEE = 0.10;       // 10% taxă de gestiune
 const WITHDRAW_FEE = 0.10;   // 10% taxă de retragere
 
-// Banner legal (apare în footer pe fiecare pagină)
-const LEGAL_BANNER = "VaultX Investment Club – exemplu demo. Profiturile nu sunt garantate. Respectați legislația aplicabilă.";
+// Footer legal banner (EN, premium legal)
+const LEGAL_BANNER = "© VaultX Investment Club. All rights reserved. All content is proprietary and protected by intellectual property laws. Unauthorized use or reproduction is strictly prohibited.";
