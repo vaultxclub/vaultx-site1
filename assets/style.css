@@ -1,3 +1,4 @@
+/* Base */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -27,7 +28,9 @@ body {
   color: #fff;
   font-weight: 600;
 }
-.nav a:hover { color: #d4af37; }
+.nav a:hover {
+  color: #d4af37;
+}
 
 /* CONTAINER & CARDS */
 .container {
@@ -70,7 +73,9 @@ body {
   text-decoration: none;
   margin-top: 20px;
 }
-.btn:hover { opacity: 0.9; }
+.btn:hover {
+  opacity: 0.9;
+}
 .btn.secondary {
   background: transparent;
   border: 1px solid #d4af37;
@@ -92,12 +97,17 @@ body {
   background: rgba(255,255,255,0.1);
 }
 
-/* FOOTER */
+/* FOOTER PREMIUM */
 .footer {
+  margin-top: 50px;
+  padding: 30px;
+  border-top: 1px solid rgba(255,215,0,0.2);
+  color: #bbb;
+  font-size: 14px;
   text-align: center;
-  padding: 20px 10px;
-  border-top: 1px solid rgba(255,255,255,0.2);
-  background: rgba(0,0,0,0.85);
+  background: #0f0f0f;
+  box-shadow: 0 -4px 25px rgba(255,215,0,0.05);
+  letter-spacing: 0.3px;
 }
 .footer-logo {
   font-weight: 700;
@@ -105,13 +115,17 @@ body {
   margin-bottom: 5px;
 }
 .footer-links a {
-  color: #ccc;
+  color: #d4af37;
   text-decoration: none;
+  margin: 0 5px;
+  font-weight: 600;
 }
-.footer-links a:hover { color: #d4af37; }
+.footer-links a:hover {
+  color: #fff;
+}
 .footer-legal {
   font-size: 13px;
-  color: #aaa;
+  color: #888;
   margin-top: 10px;
   line-height: 1.4;
 }
