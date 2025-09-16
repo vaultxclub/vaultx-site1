@@ -1,167 +1,109 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VaultX Investment Club — Elite. Global. Exclusive.</title>
-  <meta name="description" content="VaultX Investment Club — an exclusive, global private club for elite members. Premium insights, curated opportunities, and a world-class experience." />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VaultX Investment Club</title>
 
-  <!-- Fonts & Styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Social Preview -->
-  <meta property="og:title" content="VaultX Investment Club" />
-  <meta property="og:description" content="Elite. Global. Exclusive. Join the VaultX Investment Club." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/og-image.jpg" />
-  <link rel="icon" href="assets/favicon.png" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/style.css">
+
+  <!-- Config -->
+  <script src="assets/config.js"></script>
 </head>
 <body>
-
-  <!-- NAV -->
-  <header class="vx-nav">
-    <div class="vx-container nav-inner">
-      <a class="brand" href="#top" aria-label="VaultX Investment Club">VaultX Investment Club</a>
-      <nav class="vx-menu" aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#membership">Membership</a>
-        <a href="#contact">Contact</a>
-        <a class="btn-ghost" href="#join">Join the Club</a>
-      </nav>
-      <button class="vx-burger" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+  <!-- Navbar -->
+  <div class="nav">
+    <div class="logo">VAULTX</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="calculator.html">Calculator</a>
+      <a href="elite.html">Elite</a>
+      <a href="rules.html">Rules</a>
+      <a href="faq.html">FAQ</a>
+      <a href="join.html">Join</a>
     </div>
-  </header>
+  </div>
 
   <!-- HERO -->
-  <section id="top" class="vx-hero">
-    <div class="vx-hero-overlay"></div>
-    <div class="vx-container hero-inner">
-      <h1 class="vx-title">VaultX Investment Club</h1>
-      <p class="vx-subtitle">Elite. Global. Exclusive. Where capital meets precision.</p>
-      <div class="vx-cta">
-        <a class="btn-primary" href="#join">Join the Club</a>
-        <a class="btn-ghost" href="#membership">View Memberships</a>
-      </div>
-      <div class="vx-badges">
-        <span>Private Access</span>
-        <span>Curated Opportunities</span>
-        <span>Global Network</span>
-      </div>
-    </div>
-    <div class="vx-hero-gradient"></div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="vx-section">
-    <div class="vx-container grid-2">
-      <div>
-        <h2 class="vx-h2">A Private Club for the Ambitious</h2>
-        <p class="vx-p">
-          VaultX Investment Club is a members-only network delivering premium insights, disciplined strategy, and curated access to opportunities.
-          Our mission is simple: empower our members with elite information, world-class tools, and a trusted community that compounds advantage over time.
-        </p>
-        <ul class="vx-list">
-          <li>Global perspective with a strict risk-first approach</li>
-          <li>Premium research, deal flow previews, and education</li>
-          <li>Members-only events and private briefings</li>
-        </ul>
-        <a class="link-arrow" href="#membership">Discover membership →</a>
-      </div>
-
-      <div class="vx-card glass">
-        <h3 class="vx-h3">What You Gain</h3>
-        <ul class="vx-checklist">
-          <li>Elite intelligence & weekly market notes</li>
-          <li>Structured playbooks and capital frameworks</li>
-          <li>Priority access to members-only opportunities</li>
-          <li>Concierge support and onboarding</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- MEMBERSHIP -->
-  <section id="membership" class="vx-section alt">
-    <div class="vx-container">
-      <h2 class="vx-h2 center">Membership Tiers</h2>
-      <p class="vx-p center narrow">
-        Choose the access level that fits your ambitions. Upgrade anytime.
+  <div class="container">
+    <div class="hero">
+      <h1>VaultX Investment Club</h1>
+      <p>
+        The private club where elite investors grow their wealth.<br>
+        <b>Smart, risk-managed growth for ambitious members.</b><br>
+        Exclusive. Transparent. Global.
       </p>
+      <a class="btn" href="join.html">🚀 Become a Member</a>
+    </div>
+  </div>
 
-      <div class="cards-3">
-        <article class="vx-plan">
-          <div class="vx-plan-header">
-            <h3>Official</h3>
-            <p class="muted">Public insights & community updates</p>
-          </div>
-          <ul class="vx-features">
-            <li>Weekly highlights</li>
-            <li>Open community access</li>
-            <li>Basic education modules</li>
-          </ul>
-          <div class="vx-plan-cta">
-            <span class="price">Free</span>
-            <a class="btn-secondary" href="#join">Get Started</a>
-          </div>
-        </article>
+  <!-- Investment Tiers -->
+  <div class="container">
+    <div class="card">
+      <h2>📊 Investment Tiers</h2>
+      <p>Choose your entry capital and see how your monthly profits could scale:</p>
+      <table class="table">
+        <thead>
+          <tr><th>Capital (USDT)</th><th>Indicative Monthly Growth (%)</th></tr>
+        </thead>
+        <tbody id="tiers"></tbody>
+      </table>
+      <a class="btn secondary" href="calculator.html">Calculate My Returns</a>
+    </div>
+  </div>
 
-        <article class="vx-plan featured">
-          <div class="vx-plan-header">
-            <h3>ELITE</h3>
-            <p class="muted">Full access to the club</p>
-          </div>
-          <ul class="vx-features">
-            <li>Private briefings & deep-dive research</li>
-            <li>Priority Q&A and concierge</li>
-            <li>Curated deal flow previews</li>
-            <li>Member dashboard & tools</li>
-          </ul>
-          <div class="vx-plan-cta">
-            <span class="price">100 USDT / month</span>
-            <a class="btn-primary" href="#join">Apply Now</a>
-          </div>
-        </article>
+  <!-- Elite Section -->
+  <div class="container">
+    <div class="card">
+      <h2>👑 VaultX Club Elite</h2>
+      <p>Upgrade to the VIP layer of VaultX and unlock daily raffles + exclusive perks:</p>
+      <ul>
+        <li>Elite Subscription: <b><span id="elitePrice"></span> USDT/month</b></li>
+        <li>Daily raffle: <b><span id="raffle"></span> USDT</b> per prize</li>
+        <li>1 prize for every <b><span id="perMembers"></span></b> active members</li>
+        <li>Pay directly from your monthly profits</li>
+      </ul>
+      <a class="btn" href="elite.html">Discover Elite</a>
+    </div>
+  </div>
 
-        <article class="vx-plan">
-          <div class="vx-plan-header">
-            <h3>Institutional</h3>
-            <p class="muted">For family offices & funds</p>
-          </div>
-          <ul class="vx-features">
-            <li>Bespoke research & reporting</li>
-            <li>White-glove onboarding</li>
-            <li>Priority allocation alerts</li>
-          </ul>
-          <div class="vx-plan-cta">
-            <span class="price">Custom</span>
-            <a class="btn-secondary" href="#contact">Contact Us</a>
-          </div>
-        </article>
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">VaultX Investment Club</div>
+      <div class="footer-links">
+        <a href="rules.html">Rules</a> • 
+        <a href="faq.html">FAQ</a> • 
+        <a href="join.html">Join</a>
+      </div>
+      <div class="footer-legal">
+        © <span id="year"></span> VaultX Investment Club. All rights reserved.<br>
+        Unauthorized use or reproduction is strictly prohibited.
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- FOOTER -->
-  <footer class="vx-footer">
-    <div class="vx-container footer-inner">
-      <div class="brand-mini">VaultX Investment Club</div>
-      <nav class="vx-footer-menu">
-        <a href="#about">About</a>
-        <a href="#membership">Membership</a>
-        <a href="#contact">Contact</a>
-        <a href="#join">Join</a>
-      </nav>
-      <div class="vx-copy">
-        © VaultX Investment Club. All rights reserved. Unauthorized use or reproduction is strictly prohibited.
-      </div>
-    </div>
-  </footer>
+  <!-- Script -->
+  <script>
+    // Fill table tiers
+    const tbody = document.getElementById("tiers");
+    VAULTX_TIERS.forEach(t=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${t.capital}</td><td>${(t.pct*100).toFixed(0)}%</td>`;
+      tbody.appendChild(tr);
+    });
 
-  <script src="script.js"></script>
+    // Elite info
+    document.getElementById("elitePrice").textContent = ELITE_PRICE;
+    document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
+    document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
