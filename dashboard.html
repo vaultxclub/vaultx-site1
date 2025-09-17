@@ -8,32 +8,14 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Base styles -->
+  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Optional: page-scoped luxury tweaks (safe overrides only for this page) -->
-  <style>
-    /* Scope to this page only */
-    body.dashboard-page .card {
-      background: rgba(10, 10, 10, 0.6);
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      backdrop-filter: blur(6px);
-    }
-    body.dashboard-page .hero h1 {
-      letter-spacing: 0.5px;
-    }
-    body.dashboard-page .hero p {
-      opacity: 0.95;
-    }
-    .muted { color:#999; }
-  </style>
-
-  <!-- Config & Supabase -->
-  <script src="assets/config.js"></script>
+  <!-- Supabase + Config -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/config.js"></script>
 </head>
-<body class="dashboard-page">
+<body>
   <!-- NAVBAR -->
   <div class="nav">
     <div class="logo">VAULTX</div>
@@ -49,44 +31,33 @@
     </div>
   </div>
 
-  <!-- HERO -->
-  <div class="container">
-    <div class="hero">
-      <h1>📊 My VaultX Dashboard</h1>
-      <p>Welcome back, <span id="userEmail" style="color:#FFD700"></span>!</p>
-      <button class="btn secondary" onclick="logout()" style="margin-top:15px;">Logout</button>
-    </div>
-  </div>
-
-  <!-- DASHBOARD CONTENT -->
   <div class="container" id="contentArea">
+    <div class="hero">
+      <h1>📊 VaultX Member Dashboard</h1>
+      <p>Private overview of your membership and investment performance.</p>
+    </div>
 
-    <!-- Pending notice -->
-    <div class="card" id="pendingCard" style="max-width:600px; margin:0 auto; display:none;">
+    <!-- PENDING -->
+    <div class="card" id="pendingCard" style="display:none;">
       <h2>⏳ Account Pending</h2>
       <p>Your account is not yet activated by the VaultX team.<br>
       Please wait for confirmation or contact support.</p>
     </div>
 
-    <!-- Active member info -->
-    <div id="activeSection" style="display:none;">
-      <div class="card" style="max-width:600px;margin:0 auto;">
-        <h2>💼 Investment Overview</h2>
-        <!-- Status line is injected here by JS -->
-        <p><b>Current Capital:</b> <span id="capital">-</span> USDT</p>
-        <p><b>Current Tier:</b> <span id="tier">-</span></p>
-        <p><b>Expected Monthly Profit:</b> <span id="profit">-</span> USDT</p>
-        <p><b>Elite Member:</b> <span id="elite">-</span></p>
-        <p class="muted" style="font-size:12px;margin-top:10px;">
-          * Profit is computed using official tiers from <code>config.js</code>.
-        </p>
-      </div>
+    <!-- ACTIVE -->
+    <div class="card" id="activeSection" style="display:none;">
+      <h2>💼 Investment Overview</h2>
+      <p>Current Capital: <b id="capital"></b> USDT</p>
+      <p>Current Tier: <b id="tier"></b></p>
+      <p>Expected Monthly Profit: <b id="profit"></b></p>
+      <p>Elite Member: <b id="elite"></b></p>
+      <small>* Profit is computed using official tiers from config.js.</small>
+    </div>
 
-      <div class="card" style="max-width:600px;margin:20px auto;">
-        <h2>🔐 Account Info</h2>
-        <p><b>Email:</b> <span id="emailInfo">-</span></p>
-        <p><b>Joined on:</b> <span id="joined">-</span></p>
-      </div>
+    <div class="card" id="accountInfo" style="display:none;">
+      <h2>🔐 Account Info</h2>
+      <p>Email: <b id="userEmail"></b></p>
+      <p>Joined on: <b id="joinDate"></b></p>
     </div>
   </div>
 
@@ -98,92 +69,118 @@
       </svg>
       <span class="footer-logo">VaultX Investment Club</span>
     </div>
-
     <div class="footer-links">
       <a href="rules.html">Rules</a> •
       <a href="faq.html">FAQ</a> •
       <a href="join.html">Join</a>
     </div>
-
     <div class="footer-legal">
       <small id="legal"></small>
     </div>
   </div>
 
-  <!-- SCRIPT (FINAL) -->
-  <script>
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    document.getElementById("legal").textContent = LEGAL_BANNER;
+<script>
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+document.getElementById("legal").textContent = LEGAL_BANNER;
 
-    async function loadUser() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        window.location.href = "login.html";
-        return;
-      }
+async function loadUser() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
 
-      // Base info
-      document.getElementById("userEmail").textContent = user.email;
-      document.getElementById("emailInfo").textContent = user.email;
-      document.getElementById("joined").textContent = new Date(user.created_at).toLocaleDateString();
+  document.getElementById("userEmail").textContent = user.email;
 
-      // Fetch member row
-      const { data: member, error } = await supabase
-        .from("members")
-        .select("*")
-        .eq("email", user.email)
-        .single();
+  // Admin Panel doar pentru email-ul tău
+  if (user.email === "vaultxclub@gmail.com") {
+    loadAdminPanel();
+  }
 
-      if (error) {
-        document.getElementById("contentArea").innerHTML =
-          "<div class='card'><p>⚠️ Unable to load your member data. Please contact support.</p></div>";
-        return;
-      }
-      if (!member) {
-        document.getElementById("contentArea").innerHTML =
-          "<div class='card'><p>⚠️ No member data found. Please contact support.</p></div>";
-        return;
-      }
+  const { data: member } = await supabase
+    .from("members")
+    .select("*")
+    .eq("email", user.email)
+    .single();
 
-      // Pending vs Active
-      if (member.status === "pending") {
-        document.getElementById("pendingCard").style.display = "block";
-      } else if (member.status === "active") {
-        document.getElementById("activeSection").style.display = "block";
+  if (!member) {
+    document.getElementById("contentArea").innerHTML =
+      "<div class='card'><p>⚠️ Unable to load your member data. Please contact support.</p></div>";
+    return;
+  }
 
-        // Tier & profit from config tiers
-        const tierObj = VAULTX_TIERS.find(t => t.capital == member.capital);
-        const profit = tierObj ? (member.capital * tierObj.pct).toFixed(2) : "-";
+  document.getElementById("joinDate").textContent =
+    new Date(member.join_date).toLocaleDateString();
 
-        document.getElementById("capital").textContent = member.capital;
-        document.getElementById("tier").innerHTML = `<span style="color:#FFD700;font-weight:600;">${member.tier}</span>`;
-        document.getElementById("profit").innerHTML = `<span style="color:#FFD700;font-weight:600;">${profit}</span>`;
+  if (member.status === "pending") {
+    document.getElementById("pendingCard").style.display = "block";
+    document.getElementById("accountInfo").style.display = "block";
+  } else if (member.status === "active") {
+    document.getElementById("activeSection").style.display = "block";
+    document.getElementById("accountInfo").style.display = "block";
+    document.getElementById("capital").textContent = member.capital;
+    document.getElementById("tier").textContent = member.tier;
+    document.getElementById("elite").textContent = member.elite_status ? "Yes" : "No";
 
-        // Status badge line (color)
-        const statusColor = member.status === "active" ? "#00ff88" : "#ff4444";
-        const eliteColor = member.elite_status ? "#FFD700" : "#999";
-        const statusTag = document.createElement("p");
-        statusTag.innerHTML = `<b>Status:</b> <span style="color:${statusColor};font-weight:600;">${member.status}</span>`;
-        document.querySelector("#activeSection .card").prepend(statusTag);
-
-        // Elite badge + crown near name
-        document.getElementById("elite").innerHTML =
-          `<span style="color:${eliteColor};font-weight:600;">${member.elite_status ? "Yes" : "No"}</span>`;
-        if (member.elite_status) {
-          const crown = document.createElement("span");
-          crown.textContent = " 👑";
-          crown.style.color = "#FFD700";
-          document.getElementById("userEmail").appendChild(crown);
-        }
+    // Calculează profitul corect pe baza VAULTX_TIERS
+    let pct = 0.10;
+    for (const t of VAULTX_TIERS) {
+      if (member.capital >= t.capital) {
+        pct = t.pct;
       }
     }
+    const profit = member.capital * pct;
+    document.getElementById("profit").textContent = profit.toFixed(2) + " USDT";
+  }
+}
 
-    async function logout() {
-      await supabase.auth.signOut();
-      window.location.href = "login.html";
-    }
+async function loadAdminPanel() {
+  const { data: members } = await supabase.from("members").select("*").order("join_date", { ascending: false });
 
-    loadUser();
-  </script>
+  const adminDiv = document.createElement("div");
+  adminDiv.className = "card";
+  adminDiv.innerHTML = `<h2>🛡️ Admin Panel</h2>
+  <table class="table" id="adminTable">
+    <thead>
+      <tr><th>Email</th><th>Capital</th><th>Tier</th><th>Status</th><th>Elite</th><th>Save</th></tr>
+    </thead>
+    <tbody>
+      ${members.map(m=>`
+        <tr>
+          <td>${m.email}</td>
+          <td><input type="number" value="${m.capital}" style="width:80px"></td>
+          <td><input type="text" value="${m.tier}" style="width:100px"></td>
+          <td>
+            <select>
+              <option ${m.status==='pending'?'selected':''}>pending</option>
+              <option ${m.status==='active'?'selected':''}>active</option>
+            </select>
+          </td>
+          <td><input type="checkbox" ${m.elite_status ? 'checked' : ''}></td>
+          <td><button onclick="saveMember('${m.email}', this)">💾</button></td>
+        </tr>`).join("")}
+    </tbody>
+  </table>`;
+
+  document.getElementById("contentArea").prepend(adminDiv);
+}
+
+async function saveMember(email, btn) {
+  const row = btn.closest("tr");
+  const capital = parseFloat(row.children[1].children[0].value);
+  const tier = row.children[2].children[0].value;
+  const status = row.children[3].children[0].value;
+  const elite_status = row.children[4].children[0].checked;
+
+  await supabase.from("members")
+    .update({ capital, tier, status, elite_status })
+    .eq("email", email);
+
+  btn.textContent = "✅";
+  setTimeout(()=>btn.textContent = "💾", 1000);
+}
+
+loadUser();
+</script>
 </body>
 </html>
