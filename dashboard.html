@@ -144,7 +144,10 @@ async function loadAdminPanel() {
 
   const adminDiv = document.createElement("div");
   adminDiv.className = "card";
-  adminDiv.innerHTML = `<h2>🛡️ Admin Panel</h2>
+  adminDiv.innerHTML = `
+  <h2>🛡️ Admin Panel</h2>
+  <input id="searchInput" type="text" placeholder="🔍 Search by email..." 
+    style="width:100%;padding:10px;margin-bottom:15px;border-radius:8px;border:none;font-size:16px">
   <table class="table" id="adminTable">
     <thead>
       <tr>
@@ -191,6 +194,16 @@ async function loadAdminPanel() {
 
   document.getElementById("contentArea").prepend(adminDiv);
 
+  // Search filter
+  document.getElementById("searchInput").addEventListener("input", function() {
+    const val = this.value.toLowerCase();
+    document.querySelectorAll("#adminTable tbody tr").forEach(tr => {
+      const email = tr.children[0].textContent.toLowerCase();
+      tr.style.display = email.includes(val) ? "" : "none";
+    });
+  });
+
+  // Live updates
   document.querySelectorAll("#adminTable tbody tr").forEach(row => {
     const capitalInput = row.children[1].children[0];
     const tierInput = row.children[2].children[0];
