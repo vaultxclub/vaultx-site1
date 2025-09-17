@@ -81,6 +81,14 @@
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     document.getElementById("legal").textContent = LEGAL_BANNER;
 
+    // Afișează mesaj dacă utilizatorul tocmai și-a confirmat contul
+    const params = new URLSearchParams(window.location.hash.replace("#", "?"));
+    if (params.get("type") === "signup") {
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("msg").textContent = "✅ Your account has been confirmed — you can now login.";
+      });
+    }
+
     async function login() {
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
