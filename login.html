@@ -11,9 +11,9 @@
   <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Config & Supabase -->
-  <script src="assets/config.js"></script>
+  <!-- Supabase + Config -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/config.js"></script>
 </head>
 <body>
   <!-- NAVBAR -->
@@ -82,8 +82,8 @@
     document.getElementById("legal").textContent = LEGAL_BANNER;
 
     async function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) {
         document.getElementById("msg").textContent = "⚠️ " + error.message;
@@ -94,14 +94,25 @@
     }
 
     async function signup() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      document.getElementById("msg").textContent = "⏳ Creating your account...";
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: "https://vaultxclub.github.io/vaultx-site1/login.html"
+        }
+      });
+
       if (error) {
         document.getElementById("msg").textContent = "⚠️ " + error.message;
-      } else {
-        document.getElementById("msg").textContent = "📩 Check your email to confirm your account.";
+        return;
       }
+
+      document.getElementById("msg").textContent =
+        "📩 Check your inbox to confirm your account, then return here to sign in.";
     }
   </script>
 </body>
