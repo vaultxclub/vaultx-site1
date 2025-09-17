@@ -47,6 +47,9 @@
     <!-- ACTIVE -->
     <div class="card" id="activeSection" style="display:none;">
       <h2>💼 Investment Overview</h2>
+      <div id="eliteBadge" style="display:none; margin-bottom:10px; color:#FFD700; font-weight:700; font-size:18px;">
+        ⭐ ELITE MEMBER
+      </div>
       <p>Current Capital: <b id="capital"></b> USDT</p>
       <p>Current Tier: <b id="tier"></b></p>
       <p>Expected Monthly Profit: <b id="profit"></b></p>
@@ -92,7 +95,6 @@ async function loadUser() {
 
   document.getElementById("userEmail").textContent = user.email;
 
-  // Admin Panel doar pentru email-ul tău
   if (user.email === "vaultxclub@gmail.com") {
     loadAdminPanel();
   }
@@ -123,8 +125,11 @@ async function loadUser() {
     document.getElementById("tier").textContent = member.tier;
     document.getElementById("elite").textContent = member.elite_status ? "Yes" : "No";
 
-    // ✅ Calculează procentul corect conform VAULTX_TIERS (procente DESC)
-    let pct = VAULTX_TIERS[VAULTX_TIERS.length - 1].pct; // fallback la ultimul (10%)
+    if (member.elite_status) {
+      document.getElementById("eliteBadge").style.display = "block";
+    }
+
+    let pct = VAULTX_TIERS[VAULTX_TIERS.length-1].pct;
     for (const t of VAULTX_TIERS) {
       if (member.capital >= t.capital) pct = t.pct;
     }
@@ -142,14 +147,32 @@ async function loadAdminPanel() {
   adminDiv.innerHTML = `<h2>🛡️ Admin Panel</h2>
   <table class="table" id="adminTable">
     <thead>
-      <tr><th>Email</th><th>Capital</th><th>Tier</th><th>Status</th><th>Elite</th><th>Save</th></tr>
+      <tr>
+        <th>Email</th>
+        <th>Capital</th>
+        <th>Tier</th>
+        <th>Status</th>
+        <th>Elite</th>
+        <th>Profit Est.</th>
+        <th>Joined</th>
+        <th>Save</th>
+        <th>Delete</th>
+      </tr>
     </thead>
     <tbody>
-      ${members.map(m=>`
+      ${members.map(m=>{
+        let pct = VAULTX_TIERS[VAULTX_TIERS.length-1].pct;
+        for (const t of VAULTX_TIERS) {
+          if (m.capital >= t.capital) pct = t.pct;
+        }
+        const profit = (m.capital * pct).toFixed(2);
+        const eliteStar = m.elite_status ? "⭐" : "";
+        const joined = new Date(m.join_date).toLocaleDateString();
+        return `
         <tr>
-          <td>${m.email}</td>
+          <td>${eliteStar} ${m.email}</td>
           <td><input type="number" value="${m.capital}" style="width:80px"></td>
-          <td><input type="text" value="${m.tier}" style="width:110px"></td>
+          <td><input type="text" value="${m.tier}" style="width:110px" readonly></td>
           <td>
             <select>
               <option ${m.status==='pending'?'selected':''}>pending</option>
@@ -157,12 +180,45 @@ async function loadAdminPanel() {
             </select>
           </td>
           <td><input type="checkbox" ${m.elite_status ? 'checked' : ''}></td>
+          <td class="profitCell">${Math.round(pct*100)}% — ${profit} USDT</td>
+          <td>${joined}</td>
           <td><button onclick="saveMember('${m.email}', this)">💾</button></td>
-        </tr>`).join("")}
+          <td><button style="color:red" onclick="deleteMember('${m.email}', this)">🗑️</button></td>
+        </tr>`;
+      }).join("")}
     </tbody>
   </table>`;
 
   document.getElementById("contentArea").prepend(adminDiv);
+
+  document.querySelectorAll("#adminTable tbody tr").forEach(row => {
+    const capitalInput = row.children[1].children[0];
+    const tierInput = row.children[2].children[0];
+    const eliteInput = row.children[4].children[0];
+    const emailCell = row.children[0];
+    const profitCell = row.children[5];
+
+    capitalInput.addEventListener("input", () => {
+      let chosen = VAULTX_TIERS[0];
+      for (const t of VAULTX_TIERS) {
+        if (parseFloat(capitalInput.value) >= t.capital) chosen = t;
+      }
+      const pct = chosen.pct;
+      const profit = (parseFloat(capitalInput.value) * pct).toFixed(2);
+      tierInput.value = `Tier ${chosen.capital}`;
+      profitCell.textContent = `${Math.round(pct*100)}% — ${profit} USDT`;
+    });
+
+    eliteInput.addEventListener("change", () => {
+      if (eliteInput.checked) {
+        if (!emailCell.textContent.includes("⭐")) {
+          emailCell.textContent = "⭐ " + emailCell.textContent.trim();
+        }
+      } else {
+        emailCell.textContent = emailCell.textContent.replace("⭐","").trim();
+      }
+    });
+  });
 }
 
 async function saveMember(email, btn) {
@@ -180,6 +236,15 @@ async function saveMember(email, btn) {
   setTimeout(()=>btn.textContent = "💾", 1000);
 }
 
+async function deleteMember(email, btn) {
+  if (!confirm(`Are you sure you want to delete ${email}?`)) return;
+
+  await supabase.from("members")
+    .delete()
+    .eq("email", email);
+
+  btn.closest("tr").remove();
+}
 loadUser();
 </script>
 </body>
