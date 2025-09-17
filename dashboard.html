@@ -97,13 +97,13 @@ async function loadUser() {
     loadAdminPanel();
   }
 
-  const { data: member } = await supabase
+  const { data: member, error } = await supabase
     .from("members")
     .select("*")
     .eq("email", user.email)
     .single();
 
-  if (!member) {
+  if (error || !member) {
     document.getElementById("contentArea").innerHTML =
       "<div class='card'><p>⚠️ Unable to load your member data. Please contact support.</p></div>";
     return;
@@ -118,19 +118,19 @@ async function loadUser() {
   } else if (member.status === "active") {
     document.getElementById("activeSection").style.display = "block";
     document.getElementById("accountInfo").style.display = "block";
+
     document.getElementById("capital").textContent = member.capital;
     document.getElementById("tier").textContent = member.tier;
     document.getElementById("elite").textContent = member.elite_status ? "Yes" : "No";
 
-    // Calculează profitul corect pe baza VAULTX_TIERS
-    let pct = 0.10;
+    // ✅ Calculează procentul corect conform VAULTX_TIERS (procente DESC)
+    let pct = VAULTX_TIERS[VAULTX_TIERS.length - 1].pct; // fallback la ultimul (10%)
     for (const t of VAULTX_TIERS) {
-      if (member.capital >= t.capital) {
-        pct = t.pct;
-      }
+      if (member.capital >= t.capital) pct = t.pct;
     }
     const profit = member.capital * pct;
-    document.getElementById("profit").textContent = profit.toFixed(2) + " USDT";
+    document.getElementById("profit").textContent =
+      `${Math.round(pct*100)}% — ${profit.toFixed(2)} USDT`;
   }
 }
 
@@ -149,7 +149,7 @@ async function loadAdminPanel() {
         <tr>
           <td>${m.email}</td>
           <td><input type="number" value="${m.capital}" style="width:80px"></td>
-          <td><input type="text" value="${m.tier}" style="width:100px"></td>
+          <td><input type="text" value="${m.tier}" style="width:110px"></td>
           <td>
             <select>
               <option ${m.status==='pending'?'selected':''}>pending</option>
