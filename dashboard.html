@@ -41,6 +41,28 @@
       border-top: 2px solid #d4af37;
       padding-top: 25px;
     }
+    .refresh-btn, .logout-btn {
+      background:#d4af37;
+      color:#111;
+      padding:8px 15px;
+      border:none;
+      border-radius:5px;
+      margin-bottom:15px;
+      cursor:pointer;
+      font-weight:600;
+      margin-right: 10px;
+    }
+    .top-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    #logoutMsg {
+      color:#d4af37;
+      margin-left: 15px;
+      font-weight:600;
+    }
   </style>
 </head>
 <body>
@@ -61,9 +83,15 @@
 
   <!-- HERO -->
   <div class="container">
-    <div class="hero">
-      <h1>📊 VaultX Dashboard</h1>
-      <p>Your personal VaultX account overview.</p>
+    <div class="hero top-actions">
+      <div>
+        <h1>📊 VaultX Dashboard</h1>
+        <p>Your personal VaultX account overview.</p>
+      </div>
+      <div>
+        <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+        <span id="logoutMsg"></span>
+      </div>
     </div>
   </div>
 
@@ -75,12 +103,14 @@
 
     <div class="card admin-section" id="adminPanel" style="display:none;">
       <h2>🛠 Admin Panel</h2>
+      <button class="refresh-btn" onclick="loadAllMembers()">🔄 Refresh Data</button>
       <table>
         <thead>
           <tr>
             <th>Email</th>
             <th>Capital</th>
             <th>Tier</th>
+            <th>Expected Profit</th>
             <th>Elite</th>
             <th>Status</th>
             <th>Joined</th>
@@ -140,10 +170,6 @@ async function loadUserData(email) {
     return;
   }
 
-  const pct = getTierPct(data.capital);
-  const gross = data.capital * pct;
-  const net = gross * 0.81;
-
   document.getElementById("userData").innerHTML = `
     <h2>👤 Welcome, ${data.email}</h2>
     <p>Status: <b>${data.status}</b></p>
@@ -151,7 +177,7 @@ async function loadUserData(email) {
     <p>
       Current Capital: <b>${data.capital} USDT</b><br>
       Current Tier: <b>${data.tier}</b><br>
-      Expected Monthly Profit: <b>${net.toFixed(2)} USDT</b><br>
+      Expected Monthly Profit: <b>${data.expected_profit?.toFixed(2) ?? "N/A"} USDT</b><br>
       Elite Member: <b>${data.elite_status ? "Yes" : "No"}</b>
     </p>
     <h3>🔐 Account Info</h3>
@@ -160,14 +186,6 @@ async function loadUserData(email) {
       Joined on: ${new Date(data.join_date).toLocaleDateString()}
     </p>
   `;
-}
-
-function getTierPct(capital) {
-  let pct = VAULTX_TIERS[VAULTX_TIERS.length - 1].pct;
-  for (const t of VAULTX_TIERS) {
-    if (capital >= t.capital) pct = t.pct;
-  }
-  return pct;
 }
 
 async function loadAllMembers() {
@@ -183,6 +201,7 @@ async function loadAllMembers() {
       <td>${m.email}</td>
       <td><input type="number" value="${m.capital}" onchange="updateMember('${m.id}','capital',this.value)"></td>
       <td>${m.tier}</td>
+      <td>${m.expected_profit?.toFixed(2) ?? "N/A"}</td>
       <td>
         <select onchange="updateMember('${m.id}','elite_status',this.value)">
           <option value="false" ${!m.elite_status ? "selected":""}>No</option>
@@ -211,6 +230,12 @@ async function updateMember(id, field, value) {
 async function deleteMember(id) {
   await supabase.from("members").delete().eq("id", id);
   loadAllMembers();
+}
+
+async function logout() {
+  await supabase.auth.signOut();
+  document.getElementById("logoutMsg").textContent = "✅ Logged out successfully";
+  setTimeout(() => window.location.href = "login.html", 1000);
 }
 </script>
 </body>
