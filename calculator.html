@@ -5,14 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX Profit Calculator</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
-
-  <!-- Config -->
   <script src="assets/config.js"></script>
+
+  <style>
+    #tierTable th {
+      background: #111;
+      color: #d4af37;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    #tierTable td {
+      padding: 10px;
+    }
+    .elite-bonus {
+      color: #d4af37;
+      font-weight: 600;
+    }
+    .highlight {
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+  </style>
 </head>
 <body>
   <!-- NAVBAR -->
@@ -25,96 +40,107 @@
       <a href="rules.html">Rules</a>
       <a href="faq.html">FAQ</a>
       <a href="join.html">Join</a>
-      <a href="login.html">Login</a>
-      <a href="dashboard.html">Dashboard</a>
-    </div>
-  </div>
-
-  <!-- HERO -->
-  <div class="container">
-    <div class="hero">
-      <h1>📈 Profit Calculator</h1>
-      <p>Estimate your monthly profit based on your starting capital and official VaultX tiers.</p>
     </div>
   </div>
 
   <!-- CALCULATOR -->
   <div class="container">
-    <div class="card" style="max-width:500px;margin:auto;">
-      <label for="capitalInput">Enter your capital (USDT):</label>
-      <input id="capitalInput" type="number" value="100" min="100" step="50"
-             style="width:100%;padding:12px;border:none;border-radius:8px;margin:10px 0;font-size:16px">
-
-      <button class="btn" onclick="calculateProfit()" style="width:100%;">Calculate</button>
-
-      <div id="result" style="margin-top:20px;font-size:18px;color:#FFD700;font-weight:600;text-align:center;"></div>
+    <div class="hero">
+      <h1>📈 VaultX Profit Calculator</h1>
+      <p>Estimate your monthly profits after all fees — and see the extra <span style="color:#d4af37;">Elite bonus</span>.</p>
     </div>
-  </div>
 
-  <!-- TIERS TABLE -->
-  <div class="container">
     <div class="card">
-      <h2>📊 Official VaultX Tiers</h2>
-      <table class="table">
+      <input id="capital" type="number" placeholder="Enter your capital (USDT)" style="width:100%;padding:10px;margin-bottom:10px;">
+      
+      <label style="display:flex;align-items:center;gap:8px;margin-bottom:15px;">
+        <input type="checkbox" id="early">
+        Apply 20% Early Withdrawal fee
+      </label>
+
+      <button class="btn" onclick="calculate()">Calculate</button>
+      <div id="result" style="margin-top:20px;font-size:18px;"></div>
+    </div>
+
+    <div class="card">
+      <h2>📊 Profit Comparison by Tier</h2>
+      <table class="table" id="tierTable">
         <thead>
-          <tr><th>Capital (USDT)</th><th>Monthly Profit %</th></tr>
+          <tr>
+            <th>Capital (USDT)</th>
+            <th>Profit %</th>
+            <th>Gross Profit</th>
+            <th>Net Profit After Fees</th>
+            <th>Elite Bonus*</th>
+          </tr>
         </thead>
-        <tbody id="tiersTable"></tbody>
+        <tbody></tbody>
       </table>
+      <p style="margin-top:10px;font-size:14px;opacity:0.7;">
+        *Estimated average raffle prize per Elite member per month.
+      </p>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <div class="footer-brand">
-      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37" width="20" height="20">
-        <path d="M12 2l3 5.2 6 .8-4.3 4.3L18.4 19 12 15.8 5.6 19l1.7-6.7L3 8l6-.8z"/>
-      </svg>
-      <span class="footer-logo">VaultX Investment Club</span>
-    </div>
-    <div class="footer-links">
-      <a href="rules.html">Rules</a> •
-      <a href="faq.html">FAQ</a> •
-      <a href="join.html">Join</a>
-    </div>
-    <div class="footer-legal">
-      <small id="legal"></small>
-    </div>
+    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="faq.html">FAQ</a>
+    <br><br>
+    <small id="legal"></small>
   </div>
 
-  <!-- SCRIPT -->
-  <script>
-    document.getElementById("legal").textContent = LEGAL_BANNER;
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("legal").textContent = LEGAL_BANNER;
 
-    // Populează tabelul cu tier-ele oficiale
-    const tbody = document.getElementById("tiersTable");
-    VAULTX_TIERS.forEach(t => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${t.capital}</td><td>${(t.pct*100).toFixed(0)}%</td>`;
-      tbody.appendChild(tr);
-    });
+function calculate() {
+  const capital = parseFloat(document.getElementById("capital").value);
+  const early = document.getElementById("early").checked;
+  const result = document.getElementById("result");
 
-    // Calculează profitul corect
-    function calculateProfit() {
-      const capital = parseFloat(document.getElementById("capitalInput").value);
-      if (isNaN(capital) || capital < 100) {
-        document.getElementById("result").textContent = "⚠️ Minimum capital is 100 USDT";
-        return;
-      }
+  if (!capital || capital <= 0) {
+    result.textContent = "⚠️ Please enter a valid capital amount.";
+    return;
+  }
 
-      // Găsește procentul potrivit
-      let pct = VAULTX_TIERS[VAULTX_TIERS.length-1].pct; // fallback 10%
-      for (const t of VAULTX_TIERS) {
-        if (capital >= t.capital) pct = t.pct;
-      }
+  // Aflăm procentul corect din VAULTX_TIERS
+  let pct = VAULTX_TIERS[VAULTX_TIERS.length-1].pct;
+  for (const t of VAULTX_TIERS) {
+    if (capital >= t.capital) pct = t.pct;
+  }
 
-      const profit = capital * pct;
-      document.getElementById("result").textContent =
-        `Expected monthly profit: ${Math.round(pct*100)}% — ${profit.toFixed(2)} USDT`;
-    }
+  const gross = capital * pct;
+  let net = gross * 0.9;       // -10% management
+  net = net * 0.9;              // -10% withdrawal
+  if (early) net = net * 0.8;   // -20% early
 
-    // Rulează o dată la pornire
-    calculateProfit();
-  </script>
+  result.innerHTML = `
+    <b>Capital:</b> ${capital.toFixed(2)} USDT<br>
+    <b>Gross Profit:</b> ${gross.toFixed(2)} USDT (${Math.round(pct*100)}%)<br>
+    <b>Net Profit After Fees:</b> ${net.toFixed(2)} USDT
+  `;
+}
+
+// Generează tabelul cu toate tier-urile
+const tbody = document.querySelector("#tierTable tbody");
+const avgBonus = ELITE_RAFFLE_PRIZE_USDT / ELITE_RAFFLE_PER_MEMBERS;
+
+VAULTX_TIERS.forEach(t=>{
+  const gross = t.capital * t.pct;
+  const net = gross * 0.81; // 0.9*0.9 (fără early)
+  const tr = document.createElement("tr");
+  if (t.capital === Math.max(...VAULTX_TIERS.map(x=>x.capital))) {
+    tr.classList.add("highlight");
+  }
+  tr.innerHTML = `
+    <td>${t.capital}</td>
+    <td>${(t.pct*100).toFixed(0)}%</td>
+    <td>${gross.toFixed(2)}</td>
+    <td>${net.toFixed(2)}</td>
+    <td class="elite-bonus">+${avgBonus.toFixed(2)} USDT</td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
 </body>
 </html>
