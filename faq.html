@@ -5,13 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX FAQ</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
-
-  <!-- Config -->
   <script src="assets/config.js"></script>
 </head>
 <body>
@@ -25,98 +20,67 @@
       <a href="rules.html">Rules</a>
       <a href="faq.html" class="active">FAQ</a>
       <a href="join.html">Join</a>
-      <a href="login.html">Login</a>
-      <a href="dashboard.html">Dashboard</a>
     </div>
   </div>
 
-  <!-- HERO -->
+  <!-- FAQ -->
   <div class="container">
     <div class="hero">
-      <h1>❓ Frequently Asked Questions</h1>
-      <p>
-        Quick answers to the most common questions about VaultX.<br>
-        Designed to give you clarity, trust, and confidence.
-      </p>
-    </div>
-  </div>
-
-  <!-- FAQ ITEMS -->
-  <div class="container">
-
-    <div class="card">
-      <h2>1. What is the minimum amount to join?</h2>
-      <p>The minimum entry capital is <b>100 USDT</b>. Higher tiers are available: 250, 500, 1000, 2500, 5000, 10000 USDT – each with different profit percentages.</p>
+      <h1>❓ VaultX FAQ</h1>
+      <p>Frequently Asked Questions from our members.</p>
     </div>
 
     <div class="card">
-      <h2>2. Can I withdraw my initial capital anytime?</h2>
-      <p>No. Your <b>initial capital remains locked</b> during membership. It is only refunded in case of <b>fund losses</b> or official club closure. Members can withdraw only monthly profits.</p>
+      <h2>1. What is VaultX Investment Club?</h2>
+      <p>VaultX is a private, invitation-only investment club for elite investors worldwide.</p>
     </div>
 
     <div class="card">
-      <h2>3. How are profits calculated?</h2>
-      <p>Profits are set by tier: between <b>10% – 40% monthly</b>. A <b>10% management fee</b> and a <b>10% withdrawal fee</b> are applied. Try our <a href="calculator.html">Profit Calculator</a> for exact numbers.</p>
+      <h2>2. How much profit can I expect?</h2>
+      <p>Between 10% and 40% monthly returns, depending on your tier.</p>
     </div>
 
     <div class="card">
-      <h2>4. What is VaultX Club Elite?</h2>
-      <p>Elite is the VIP layer of VaultX. For <b><span id="elitePrice"></span> USDT/month</b>, members get access to <b>daily raffles of <span id="raffle"></span> USDT</b> for every <b><span id="perMembers"></span></b> active members, plus networking, education and VIP support.</p>
+      <h2>3. Is my initial capital safe?</h2>
+      <p>Yes. Initial capital is guaranteed and only refunded if the fund closes or losses occur.</p>
     </div>
 
     <div class="card">
-      <h2>5. What happens if I reinvest my profits?</h2>
-      <p>Reinvesting (compounding) increases your tier and returns. However, <b>compounded capital becomes locked</b> and is not covered by the initial capital guarantee.</p>
+      <h2>4. How are profits distributed?</h2>
+      <p>Profits are distributed monthly. You can withdraw or compound them to upgrade tiers.</p>
     </div>
 
     <div class="card">
-      <h2>6. Is there a referral system?</h2>
-      <p>Yes. You earn <b>10%</b> of the first deposit made by each new member you bring. If that member also joins Elite, you receive an extra <b>+10 USDT</b>.</p>
+      <h2>5. How do I join?</h2>
+      <p>Simply click the <a href="join.html">Join</a> button and follow the steps to register.</p>
+    </div>
+
+    <div class="card">
+      <h2>6. What is VaultX Club Elite?</h2>
+      <p>Elite is the VIP layer of VaultX, granting access to daily raffles, exclusive rewards, and private content.</p>
     </div>
 
     <div class="card">
       <h2>7. How do I contact VaultX directly?</h2>
-      <p>
-        – Official Telegram Channel: <a href="#" id="telegramChannel">📲 VaultX Channel</a><br>
-        – Direct CEO Contact: <a href="#" id="telegramContact">🤝 VaultX CEO</a>
-      </p>
+      <ul>
+        <li>Official Telegram Channel: 📲 <a href="https://t.me/VaultXClub" target="_blank">VaultX Channel</a></li>
+        <li>Direct CEO Contact: 🤝 <a href="https://t.me/VaultXCEO" target="_blank">VaultX CEO</a></li>
+      </ul>
     </div>
-
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <div class="footer-brand">
-      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37" width="20" height="20">
-        <path d="M12 2l3 5.2 6 .8-4.3 4.3L18.4 19 12 15.8 5.6 19l1.7-6.7L3 8l6-.8z"/>
-      </svg>
-      <span class="footer-logo">VaultX Investment Club</span>
-    </div>
-
     <div class="footer-links">
-      <a href="rules.html">Rules</a> •
-      <a href="faq.html">FAQ</a> •
-      <a href="join.html">Join</a>
-    </div>
-
-    <div class="footer-legal">
+      © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="join.html">Join</a>
+      <br><br>
       <small id="legal"></small>
     </div>
   </div>
 
-  <!-- SCRIPT -->
-  <script>
-    // Elite data
-    document.getElementById("elitePrice").textContent = ELITE_PRICE;
-    document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
-    document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
-
-    // Telegram links
-    document.getElementById("telegramChannel").href = TELEGRAM_CHANNEL;
-    document.getElementById("telegramContact").href = TELEGRAM_CONTACT;
-
-    // Footer
-    document.getElementById("legal").textContent = LEGAL_BANNER;
-  </script>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById("legal").textContent = LEGAL_BANNER;
+</script>
 </body>
 </html>

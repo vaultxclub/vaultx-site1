@@ -1,4 +1,4 @@
-<!doctype html>
+!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -15,7 +15,7 @@
   <script src="assets/config.js"></script>
 </head>
 <body>
-  <!-- NAVBAR -->
+  <!-- Navbar -->
   <div class="nav">
     <div class="logo">VAULTX</div>
     <div>
@@ -40,6 +40,10 @@
         Exclusive. Transparent. Global.
       </p>
       <a class="btn" href="join.html">🚀 Become a Member</a>
+      <p style="margin-top:12px;font-size:15px;">
+        📲 <a href="https://t.me/VaultXClub" target="_blank">Official Channel</a> • 
+        🤝 <a href="https://t.me/VaultXCEO" target="_blank">Direct CEO Contact</a>
+      </p>
     </div>
   </div>
 
@@ -73,24 +77,11 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <div class="footer">
-    <div class="footer-brand">
-      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37" width="20" height="20">
-        <path d="M12 2l3 5.2 6 .8-4.3 4.3L18.4 19 12 15.8 5.6 19l1.7-6.7L3 8l6-.8z"/>
-      </svg>
-      <span class="footer-logo">VaultX Investment Club</span>
-    </div>
-
-    <div class="footer-links">
-      <a href="rules.html">Rules</a> •
-      <a href="faq.html">FAQ</a> •
-      <a href="join.html">Join</a>
-    </div>
-
-    <div class="footer-legal">
-      <small id="legal"></small>
-    </div>
+    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="join.html">Join</a>
+    <br><br>
+    <small id="legal"></small>
   </div>
 
   <!-- Script -->
@@ -108,7 +99,8 @@
     document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
     document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
 
-    // Legal
+    // Footer
+    document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("legal").textContent = LEGAL_BANNER;
   </script>
 </body>
