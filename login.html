@@ -5,13 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX Login</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Supabase + Config -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/config.js"></script>
 </head>
@@ -27,101 +23,75 @@
       <a href="faq.html">FAQ</a>
       <a href="join.html">Join</a>
       <a href="login.html" class="active">Login</a>
-      <a href="dashboard.html">Dashboard</a>
     </div>
   </div>
 
-  <!-- HERO -->
+  <!-- LOGIN SECTION -->
   <div class="container">
     <div class="hero">
-      <h1>🔐 Member Login</h1>
-      <p>Access your private VaultX member dashboard.</p>
+      <h1>🔐 VaultX Member Login</h1>
+      <p>Log in or create your VaultX account below.</p>
     </div>
-  </div>
 
-  <!-- LOGIN FORM -->
-  <div class="container">
-    <div class="card" style="max-width:480px;margin:20px auto;text-align:left;">
-      <label>Email</label>
-      <input id="email" type="email" placeholder="Enter your email"
-             style="width:100%;padding:12px;border-radius:8px;border:none;margin:8px 0">
-      
-      <label>Password</label>
-      <input id="password" type="password" placeholder="Enter your password"
-             style="width:100%;padding:12px;border-radius:8px;border:none;margin:8px 0">
-      
-      <button class="btn" onclick="login()">Sign in</button>
-      <button class="btn secondary" onclick="signup()" style="margin-left:8px;">Create account</button>
-      <div id="msg" style="margin-top:12px;color:#FFD700;font-weight:600"></div>
+    <div class="card">
+      <input id="email" type="email" placeholder="Email" style="width:100%;padding:10px;margin-bottom:10px;">
+      <input id="password" type="password" placeholder="Password" style="width:100%;padding:10px;margin-bottom:10px;">
+      <button class="btn" onclick="login()">Login</button>
+      <button class="btn secondary" onclick="signup()" style="margin-top:10px;">Create Account</button>
+      <p id="msg" style="margin-top:10px;color:#d4af37;"></p>
+    </div>
+
+    <div class="card">
+      <h2>📨 Need help?</h2>
+      <p>If you need help with your account, contact VaultX Support directly.</p>
+      <p>
+        🤝 <a href="https://t.me/VaultXCEO" target="_blank">Contact VaultX Support (CEO)</a>
+      </p>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <div class="footer-brand">
-      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37" width="20" height="20">
-        <path d="M12 2l3 5.2 6 .8-4.3 4.3L18.4 19 12 15.8 5.6 19l1.7-6.7L3 8l6-.8z"/>
-      </svg>
-      <span class="footer-logo">VaultX Investment Club</span>
-    </div>
-
-    <div class="footer-links">
-      <a href="rules.html">Rules</a> •
-      <a href="faq.html">FAQ</a> •
-      <a href="join.html">Join</a>
-    </div>
-
-    <div class="footer-legal">
-      <small id="legal"></small>
-    </div>
+    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="faq.html">FAQ</a>
+    <br><br>
+    <small id="legal"></small>
   </div>
 
-  <!-- SCRIPT -->
-  <script>
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    document.getElementById("legal").textContent = LEGAL_BANNER;
+<script>
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Afișează mesaj dacă utilizatorul tocmai și-a confirmat contul
-    const params = new URLSearchParams(window.location.hash.replace("#", "?"));
-    if (params.get("type") === "signup") {
-      document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("msg").textContent = "✅ Your account has been confirmed — you can now login.";
-      });
-    }
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("legal").textContent = LEGAL_BANNER;
 
-    async function login() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) {
-        document.getElementById("msg").textContent = "⚠️ " + error.message;
-      } else {
-        document.getElementById("msg").textContent = "✅ Success. Redirecting...";
-        setTimeout(()=>location.href="dashboard.html", 800);
-      }
-    }
+async function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-    async function signup() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      document.getElementById("msg").textContent = "⏳ Creating your account...";
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    document.getElementById("msg").textContent = "❌ " + error.message;
+  } else {
+    document.getElementById("msg").textContent = "✅ Login successful. Redirecting...";
+    setTimeout(()=>window.location.href="dashboard.html", 1000);
+  }
+}
 
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: "https://vaultxclub.github.io/vaultx-site1/login.html"
-        }
-      });
+async function signup() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-      if (error) {
-        document.getElementById("msg").textContent = "⚠️ " + error.message;
-        return;
-      }
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { emailRedirectTo: window.location.origin + "/login.html" }
+  });
 
-      document.getElementById("msg").textContent =
-        "📩 Check your inbox to confirm your account, then return here to sign in.";
-    }
-  </script>
+  if (error) {
+    document.getElementById("msg").textContent = "❌ " + error.message;
+  } else {
+    document.getElementById("msg").textContent = "✅ Check your email to confirm your account.";
+  }
+}
+</script>
 </body>
 </html>
