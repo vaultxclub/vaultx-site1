@@ -5,15 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX Dashboard</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
-
-  <!-- Supabase + Config -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/config.js"></script>
+
+  <style>
+    .data-card {
+      margin-bottom: 25px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #333;
+      text-align: left;
+    }
+    th {
+      background: #111;
+      color: #d4af37;
+      text-transform: uppercase;
+    }
+    td input, td select {
+      width: 100%;
+      background: #111;
+      border: 1px solid #555;
+      color: white;
+      padding: 4px;
+    }
+    .admin-section {
+      margin-top: 40px;
+      border-top: 2px solid #d4af37;
+      padding-top: 25px;
+    }
+  </style>
 </head>
 <body>
   <!-- NAVBAR -->
@@ -31,234 +59,159 @@
     </div>
   </div>
 
-  <div class="container" id="contentArea">
+  <!-- HERO -->
+  <div class="container">
     <div class="hero">
-      <h1>📊 VaultX Member Dashboard</h1>
-      <p>Private overview of your membership and investment performance.</p>
+      <h1>📊 VaultX Dashboard</h1>
+      <p>Your personal VaultX account overview.</p>
+    </div>
+  </div>
+
+  <!-- USER DASHBOARD -->
+  <div class="container">
+    <div class="card data-card" id="userData">
+      ⏳ Loading your account data...
     </div>
 
-    <!-- PENDING -->
-    <div class="card" id="pendingCard" style="display:none;">
-      <h2>⏳ Account Pending</h2>
-      <p>Your account is not yet activated by the VaultX team.<br>
-      Please wait for confirmation or contact support.</p>
-    </div>
-
-    <!-- ACTIVE -->
-    <div class="card" id="activeSection" style="display:none;">
-      <h2>💼 Investment Overview</h2>
-      <div id="eliteBadge" style="display:none; margin-bottom:10px; color:#FFD700; font-weight:700; font-size:18px;">
-        ⭐ ELITE MEMBER
-      </div>
-      <p>Current Capital: <b id="capital"></b> USDT</p>
-      <p>Current Tier: <b id="tier"></b></p>
-      <p>Expected Monthly Profit: <b id="profit"></b></p>
-      <p>Elite Member: <b id="elite"></b></p>
-      <small>* Profit is computed using official tiers from config.js.</small>
-    </div>
-
-    <div class="card" id="accountInfo" style="display:none;">
-      <h2>🔐 Account Info</h2>
-      <p>Email: <b id="userEmail"></b></p>
-      <p>Joined on: <b id="joinDate"></b></p>
+    <div class="card admin-section" id="adminPanel" style="display:none;">
+      <h2>🛠 Admin Panel</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Capital</th>
+            <th>Tier</th>
+            <th>Elite</th>
+            <th>Status</th>
+            <th>Joined</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="membersTable"></tbody>
+      </table>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <div class="footer-brand">
-      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37" width="20" height="20">
-        <path d="M12 2l3 5.2 6 .8-4.3 4.3L18.4 19 12 15.8 5.6 19l1.7-6.7L3 8l6-.8z"/>
-      </svg>
-      <span class="footer-logo">VaultX Investment Club</span>
-    </div>
-    <div class="footer-links">
-      <a href="rules.html">Rules</a> •
-      <a href="faq.html">FAQ</a> •
-      <a href="join.html">Join</a>
-    </div>
-    <div class="footer-legal">
-      <small id="legal"></small>
-    </div>
+    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="faq.html">FAQ</a>
+    <br><br>
+    <small id="legal"></small>
   </div>
 
 <script>
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+document.getElementById("year").textContent = new Date().getFullYear();
 document.getElementById("legal").textContent = LEGAL_BANNER;
 
-async function loadUser() {
+let sessionUser = null;
+
+init();
+
+async function init() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
-    window.location.href = "login.html";
+    document.getElementById("userData").innerHTML = "⚠️ Please <a href='login.html'>login</a> first.";
     return;
   }
-
-  document.getElementById("userEmail").textContent = user.email;
+  sessionUser = user;
+  loadUserData(user.email);
 
   if (user.email === "vaultxclub@gmail.com") {
-    loadAdminPanel();
+    document.getElementById("adminPanel").style.display = "block";
+    loadAllMembers();
   }
+}
 
-  const { data: member, error } = await supabase
-    .from("members")
-    .select("*")
-    .eq("email", user.email)
-    .single();
-
-  if (error || !member) {
-    document.getElementById("contentArea").innerHTML =
-      "<div class='card'><p>⚠️ Unable to load your member data. Please contact support.</p></div>";
+async function loadUserData(email) {
+  const { data, error } = await supabase.from("members").select("*").eq("email", email).single();
+  if (error || !data) {
+    document.getElementById("userData").innerHTML = "⚠️ Unable to load your member data. Please contact <a href='https://t.me/CEOVaultX' target='_blank'>VaultX Support</a>.";
     return;
   }
 
-  document.getElementById("joinDate").textContent =
-    new Date(member.join_date).toLocaleDateString();
-
-  if (member.status === "pending") {
-    document.getElementById("pendingCard").style.display = "block";
-    document.getElementById("accountInfo").style.display = "block";
-  } else if (member.status === "active") {
-    document.getElementById("activeSection").style.display = "block";
-    document.getElementById("accountInfo").style.display = "block";
-
-    document.getElementById("capital").textContent = member.capital;
-    document.getElementById("tier").textContent = member.tier;
-    document.getElementById("elite").textContent = member.elite_status ? "Yes" : "No";
-
-    if (member.elite_status) {
-      document.getElementById("eliteBadge").style.display = "block";
-    }
-
-    let pct = VAULTX_TIERS[VAULTX_TIERS.length-1].pct;
-    for (const t of VAULTX_TIERS) {
-      if (member.capital >= t.capital) pct = t.pct;
-    }
-    const profit = member.capital * pct;
-    document.getElementById("profit").textContent =
-      `${Math.round(pct*100)}% — ${profit.toFixed(2)} USDT`;
+  if (data.status !== "active") {
+    document.getElementById("userData").innerHTML = `
+      ⏳ Account Pending<br>
+      Your account is not yet activated by the VaultX team.<br>
+      Please wait for confirmation or contact support.
+    `;
+    return;
   }
+
+  const pct = getTierPct(data.capital);
+  const gross = data.capital * pct;
+  const net = gross * 0.81;
+
+  document.getElementById("userData").innerHTML = `
+    <h2>👤 Welcome, ${data.email}</h2>
+    <p>Status: <b>${data.status}</b></p>
+    <h3>💼 Investment Overview</h3>
+    <p>
+      Current Capital: <b>${data.capital} USDT</b><br>
+      Current Tier: <b>${data.tier}</b><br>
+      Expected Monthly Profit: <b>${net.toFixed(2)} USDT</b><br>
+      Elite Member: <b>${data.elite_status ? "Yes" : "No"}</b>
+    </p>
+    <h3>🔐 Account Info</h3>
+    <p>
+      Email: ${data.email}<br>
+      Joined on: ${new Date(data.join_date).toLocaleDateString()}
+    </p>
+  `;
 }
 
-async function loadAdminPanel() {
-  const { data: members } = await supabase.from("members").select("*").order("join_date", { ascending: false });
+function getTierPct(capital) {
+  let pct = VAULTX_TIERS[VAULTX_TIERS.length - 1].pct;
+  for (const t of VAULTX_TIERS) {
+    if (capital >= t.capital) pct = t.pct;
+  }
+  return pct;
+}
 
-  const adminDiv = document.createElement("div");
-  adminDiv.className = "card";
-  adminDiv.innerHTML = `
-  <h2>🛡️ Admin Panel</h2>
-  <input id="searchInput" type="text" placeholder="🔍 Search by email..." 
-    style="width:100%;padding:10px;margin-bottom:15px;border-radius:8px;border:none;font-size:16px">
-  <table class="table" id="adminTable">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Capital</th>
-        <th>Tier</th>
-        <th>Status</th>
-        <th>Elite</th>
-        <th>Profit Est.</th>
-        <th>Joined</th>
-        <th>Save</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${members.map(m=>{
-        let pct = VAULTX_TIERS[VAULTX_TIERS.length-1].pct;
-        for (const t of VAULTX_TIERS) {
-          if (m.capital >= t.capital) pct = t.pct;
-        }
-        const profit = (m.capital * pct).toFixed(2);
-        const eliteStar = m.elite_status ? "⭐" : "";
-        const joined = new Date(m.join_date).toLocaleDateString();
-        return `
-        <tr>
-          <td>${eliteStar} ${m.email}</td>
-          <td><input type="number" value="${m.capital}" style="width:80px"></td>
-          <td><input type="text" value="${m.tier}" style="width:110px" readonly></td>
-          <td>
-            <select>
-              <option ${m.status==='pending'?'selected':''}>pending</option>
-              <option ${m.status==='active'?'selected':''}>active</option>
-            </select>
-          </td>
-          <td><input type="checkbox" ${m.elite_status ? 'checked' : ''}></td>
-          <td class="profitCell">${Math.round(pct*100)}% — ${profit} USDT</td>
-          <td>${joined}</td>
-          <td><button onclick="saveMember('${m.email}', this)">💾</button></td>
-          <td><button style="color:red" onclick="deleteMember('${m.email}', this)">🗑️</button></td>
-        </tr>`;
-      }).join("")}
-    </tbody>
-  </table>`;
+async function loadAllMembers() {
+  const { data, error } = await supabase.from("members").select("*").order("join_date", { ascending: false });
+  if (error) return;
 
-  document.getElementById("contentArea").prepend(adminDiv);
+  const tbody = document.getElementById("membersTable");
+  tbody.innerHTML = "";
 
-  // Search filter
-  document.getElementById("searchInput").addEventListener("input", function() {
-    const val = this.value.toLowerCase();
-    document.querySelectorAll("#adminTable tbody tr").forEach(tr => {
-      const email = tr.children[0].textContent.toLowerCase();
-      tr.style.display = email.includes(val) ? "" : "none";
-    });
-  });
-
-  // Live updates
-  document.querySelectorAll("#adminTable tbody tr").forEach(row => {
-    const capitalInput = row.children[1].children[0];
-    const tierInput = row.children[2].children[0];
-    const eliteInput = row.children[4].children[0];
-    const emailCell = row.children[0];
-    const profitCell = row.children[5];
-
-    capitalInput.addEventListener("input", () => {
-      let chosen = VAULTX_TIERS[0];
-      for (const t of VAULTX_TIERS) {
-        if (parseFloat(capitalInput.value) >= t.capital) chosen = t;
-      }
-      const pct = chosen.pct;
-      const profit = (parseFloat(capitalInput.value) * pct).toFixed(2);
-      tierInput.value = `Tier ${chosen.capital}`;
-      profitCell.textContent = `${Math.round(pct*100)}% — ${profit} USDT`;
-    });
-
-    eliteInput.addEventListener("change", () => {
-      if (eliteInput.checked) {
-        if (!emailCell.textContent.includes("⭐")) {
-          emailCell.textContent = "⭐ " + emailCell.textContent.trim();
-        }
-      } else {
-        emailCell.textContent = emailCell.textContent.replace("⭐","").trim();
-      }
-    });
+  data.forEach(m => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${m.email}</td>
+      <td><input type="number" value="${m.capital}" onchange="updateMember('${m.id}','capital',this.value)"></td>
+      <td>${m.tier}</td>
+      <td>
+        <select onchange="updateMember('${m.id}','elite_status',this.value)">
+          <option value="false" ${!m.elite_status ? "selected":""}>No</option>
+          <option value="true" ${m.elite_status ? "selected":""}>Yes</option>
+        </select>
+      </td>
+      <td>
+        <select onchange="updateMember('${m.id}','status',this.value)">
+          <option value="pending" ${m.status==="pending"?"selected":""}>Pending</option>
+          <option value="active" ${m.status==="active"?"selected":""}>Active</option>
+        </select>
+      </td>
+      <td>${new Date(m.join_date).toLocaleDateString()}</td>
+      <td><button onclick="deleteMember('${m.id}')">🗑</button></td>
+    `;
+    tbody.appendChild(tr);
   });
 }
 
-async function saveMember(email, btn) {
-  const row = btn.closest("tr");
-  const capital = parseFloat(row.children[1].children[0].value);
-  const tier = row.children[2].children[0].value;
-  const status = row.children[3].children[0].value;
-  const elite_status = row.children[4].children[0].checked;
-
-  await supabase.from("members")
-    .update({ capital, tier, status, elite_status })
-    .eq("email", email);
-
-  btn.textContent = "✅";
-  setTimeout(()=>btn.textContent = "💾", 1000);
+async function updateMember(id, field, value) {
+  const parsedValue = field === "elite_status" ? (value === "true") : value;
+  await supabase.from("members").update({ [field]: parsedValue }).eq("id", id);
+  loadAllMembers();
 }
 
-async function deleteMember(email, btn) {
-  if (!confirm(`Are you sure you want to delete ${email}?`)) return;
-
-  await supabase.from("members")
-    .delete()
-    .eq("email", email);
-
-  btn.closest("tr").remove();
+async function deleteMember(id) {
+  await supabase.from("members").delete().eq("id", id);
+  loadAllMembers();
 }
-loadUser();
 </script>
 </body>
 </html>

@@ -10,6 +10,22 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/config.js"></script>
+
+  <style>
+    .login-card input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #111;
+      border: 1px solid #444;
+      color: white;
+      border-radius: 5px;
+    }
+    .login-card button {
+      width: 100%;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
   <!-- NAVBAR -->
@@ -30,22 +46,22 @@
   <div class="container">
     <div class="hero">
       <h1>🔐 VaultX Member Login</h1>
-      <p>Log in or create your VaultX account below.</p>
+      <p>Access your personal dashboard or create a new account below.</p>
     </div>
 
-    <div class="card">
-      <input id="email" type="email" placeholder="Email" style="width:100%;padding:10px;margin-bottom:10px;">
-      <input id="password" type="password" placeholder="Password" style="width:100%;padding:10px;margin-bottom:10px;">
+    <div class="card login-card">
+      <input id="email" type="email" placeholder="Email">
+      <input id="password" type="password" placeholder="Password">
       <button class="btn" onclick="login()">Login</button>
-      <button class="btn secondary" onclick="signup()" style="margin-top:10px;">Create Account</button>
+      <button class="btn secondary" onclick="signup()">Create Account</button>
       <p id="msg" style="margin-top:10px;color:#d4af37;"></p>
     </div>
 
     <div class="card">
-      <h2>📨 Need help?</h2>
-      <p>If you need help with your account, contact VaultX Support directly.</p>
+      <h2>📨 Need Help?</h2>
+      <p>If you have trouble logging in, contact VaultX Support directly.</p>
       <p>
-        🤝 <a href="https://t.me/CEOVaultX" target="_blank">Contact VaultX Support (CEO)</a>
+        🤝 <a href="https://t.me/CEOVaultX" target="_blank">Contact VaultX CEO</a>
       </p>
     </div>
   </div>

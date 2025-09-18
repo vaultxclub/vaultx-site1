@@ -5,14 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX Official Rules</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
-
-  <!-- Config -->
   <script src="assets/config.js"></script>
+
+  <style>
+    .rules h2 {
+      color: #d4af37;
+      margin-top: 25px;
+    }
+    .rules ul {
+      margin-top: 10px;
+      line-height: 1.7;
+    }
+  </style>
 </head>
 <body>
   <!-- NAVBAR -->
@@ -25,8 +31,6 @@
       <a href="rules.html" class="active">Rules</a>
       <a href="faq.html">FAQ</a>
       <a href="join.html">Join</a>
-      <a href="login.html">Login</a>
-      <a href="dashboard.html">Dashboard</a>
     </div>
   </div>
 
@@ -34,16 +38,12 @@
   <div class="container">
     <div class="hero">
       <h1>📜 VaultX Official Rules</h1>
-      <p>
-        By joining VaultX, every member agrees to the following<br>
-        rules, principles, and code of conduct.
-      </p>
+      <p>By joining VaultX, every member agrees to the following rules, principles, and code of conduct.</p>
     </div>
   </div>
 
-  <!-- RULES SECTIONS -->
-  <div class="container">
-
+  <!-- RULES -->
+  <div class="container rules">
     <div class="card">
       <h2>1. General Principles</h2>
       <ul>
@@ -111,35 +111,23 @@
         <li>By joining, every member confirms they have read and accepted these rules.</li>
       </ul>
     </div>
-
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <div class="footer-brand">
-      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37" width="20" height="20">
-        <path d="M12 2l3 5.2 6 .8-4.3 4.3L18.4 19 12 15.8 5.6 19l1.7-6.7L3 8l6-.8z"/>
-      </svg>
-      <span class="footer-logo">VaultX Investment Club</span>
-    </div>
-
-    <div class="footer-links">
-      <a href="rules.html">Rules</a> •
-      <a href="faq.html">FAQ</a> •
-      <a href="join.html">Join</a>
-    </div>
-
-    <div class="footer-legal">
-      <small id="legal"></small>
-    </div>
+    © <span id="year"></span> VaultX • <a href="faq.html">FAQ</a> • <a href="join.html">Join</a>
+    <br><br>
+    <small id="legal"></small>
   </div>
 
-  <!-- Scripts -->
-  <script>
-    document.getElementById("elitePrice").textContent = ELITE_PRICE;
-    document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
-    document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
-    document.getElementById("legal").textContent = LEGAL_BANNER;
-  </script>
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("legal").textContent = LEGAL_BANNER;
+
+// Inserăm datele Elite din config.js
+document.getElementById("elitePrice").textContent = ELITE_PRICE;
+document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
+document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
+</script>
 </body>
 </html>

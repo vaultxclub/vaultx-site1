@@ -86,7 +86,7 @@
 
   <!-- Script -->
   <script>
-    // Fill table tiers
+    // Generate tiers table
     const tbody = document.getElementById("tiers");
     VAULTX_TIERS.forEach(t=>{
       const tr = document.createElement("tr");
@@ -94,7 +94,7 @@
       tbody.appendChild(tr);
     });
 
-    // Elite info
+    // Elite info from config
     document.getElementById("elitePrice").textContent = ELITE_PRICE;
     document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
     document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;

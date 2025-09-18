@@ -3,16 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VaultX Elite</title>
+  <title>VaultX Club Elite</title>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
-
-  <!-- Config -->
   <script src="assets/config.js"></script>
+
+  <style>
+    .elite-highlight {
+      color: #d4af37;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
   <!-- NAVBAR -->
@@ -25,8 +27,6 @@
       <a href="rules.html">Rules</a>
       <a href="faq.html">FAQ</a>
       <a href="join.html">Join</a>
-      <a href="login.html">Login</a>
-      <a href="dashboard.html">Dashboard</a>
     </div>
   </div>
 
@@ -35,71 +35,61 @@
     <div class="hero">
       <h1>👑 VaultX Club Elite</h1>
       <p>
-        The VIP layer of VaultX – designed for those who want<br>
-        <b>exclusive benefits, daily raffles, and premium community access</b>.
+        Unlock exclusive benefits and daily rewards by joining the <span class="elite-highlight">Elite</span> layer of VaultX.
       </p>
-      <a class="btn" href="join.html">🚀 Join VaultX Elite</a>
     </div>
   </div>
 
-  <!-- Benefits -->
+  <!-- ELITE BENEFITS -->
   <div class="container">
     <div class="card">
-      <h2>✨ Elite Membership Benefits</h2>
-      <ul style="line-height:1.8; font-size:16px;">
-        <li>Exclusive access to <b>daily raffles</b> worth <b><span id="raffle"></span> USDT</b> each.</li>
-        <li>1 raffle prize for every <b><span id="perMembers"></span></b> active Elite members.</li>
-        <li>Monthly subscription: <b><span id="elitePrice"></span> USDT</b>.</li>
-        <li>Option to pay subscription directly from monthly profits.</li>
-        <li>Access to VIP VaultX community – networking, education & private updates.</li>
-        <li>Priority support from VaultX team.</li>
+      <h2>💎 Membership Benefits</h2>
+      <ul>
+        <li>Exclusive access to VIP raffles</li>
+        <li>Priority customer support & fast payouts</li>
+        <li>Access to private investment strategies</li>
+        <li>Private Elite-only community</li>
       </ul>
     </div>
-  </div>
 
-  <!-- Example -->
-  <div class="container">
     <div class="card">
-      <h2>📌 How It Works</h2>
-      <p style="font-size:16px; line-height:1.8;">
-        If VaultX Elite has <b>120 members</b> → 1 daily raffle of <span id="raffle2"></span> USDT.<br><br>
-        If it grows to <b>240 members</b> → 2 raffles of <span id="raffle3"></span> USDT each.<br><br>
-        At <b>360 members</b> → 3 raffles, and so on.
+      <h2>📈 Monthly Details</h2>
+      <ul>
+        <li>Elite Subscription: <b><span id="elitePrice"></span> USDT/month</b></li>
+        <li>Daily raffle prizes: <b><span id="raffle"></span> USDT</b> each</li>
+        <li>1 prize for every <b><span id="perMembers"></span></b> active Elite members</li>
+        <li>Subscription can be paid directly from your monthly profits</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>🚀 Become Elite</h2>
+      <p>
+        Apply now to upgrade your membership and start receiving exclusive rewards.
+      </p>
+      <a class="btn" href="join.html">Join VaultX Elite</a>
+      <p style="margin-top:15px;">
+        📲 <a href="https://t.me/VaultXClub" target="_blank">Official Channel</a><br>
+        🤝 <a href="https://t.me/CEOVaultX" target="_blank">Contact VaultX Support (CEO)</a>
       </p>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <div class="footer-brand">
-      <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4af37" width="20" height="20">
-        <path d="M12 2l3 5.2 6 .8-4.3 4.3L18.4 19 12 15.8 5.6 19l1.7-6.7L3 8l6-.8z"/>
-      </svg>
-      <span class="footer-logo">VaultX Investment Club</span>
-    </div>
-
-    <div class="footer-links">
-      <a href="rules.html">Rules</a> •
-      <a href="faq.html">FAQ</a> •
-      <a href="join.html">Join</a>
-    </div>
-
-    <div class="footer-legal">
-      <small id="legal"></small>
-    </div>
+    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="faq.html">FAQ</a>
+    <br><br>
+    <small id="legal"></small>
   </div>
 
-  <!-- Script -->
-  <script>
-    // Elite data from config.js
-    document.getElementById("elitePrice").textContent = ELITE_PRICE;
-    document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
-    document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
-    document.getElementById("raffle2").textContent = ELITE_RAFFLE_PRIZE_USDT;
-    document.getElementById("raffle3").textContent = ELITE_RAFFLE_PRIZE_USDT;
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("legal").textContent = LEGAL_BANNER;
 
-    // Footer
-    document.getElementById("legal").textContent = LEGAL_BANNER;
-  </script>
+// Inserăm datele din config.js
+document.getElementById("elitePrice").textContent = ELITE_PRICE;
+document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
+document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
+</script>
 </body>
 </html>
