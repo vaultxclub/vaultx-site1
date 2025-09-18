@@ -3,23 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Join VaultX Club</title>
+  <title>Join VaultX</title>
 
+  <!-- Fonts + CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
-  <script src="assets/config.js"></script>
 
-  <style>
-    .steps h2 {
-      color: #d4af37;
-      margin-top: 25px;
-    }
-    .steps ol {
-      margin-top: 10px;
-      line-height: 1.8;
-      padding-left: 25px;
-    }
-  </style>
+  <!-- Config JS -->
+  <script src="assets/config.js"></script>
 </head>
 <body>
   <!-- NAVBAR -->
@@ -32,56 +23,61 @@
       <a href="rules.html">Rules</a>
       <a href="faq.html">FAQ</a>
       <a href="join.html" class="active">Join</a>
+      <a href="login.html">Login</a>
     </div>
   </div>
 
   <!-- HERO -->
   <div class="container">
     <div class="hero">
-      <h1>🚀 Join VaultX Club</h1>
-      <p>Follow the steps below to become an official VaultX member.</p>
+      <h1>🚀 Become a VaultX Member</h1>
+      <p>Follow these simple steps to join the club and start earning.</p>
     </div>
   </div>
 
   <!-- JOIN STEPS -->
-  <div class="container steps">
+  <div class="container">
     <div class="card">
-      <h2>📋 How to Join</h2>
-      <ol>
-        <li>Read the <a href="rules.html">VaultX Official Rules</a>.</li>
-        <li>Prepare your starting capital (minimum 100 USDT).</li>
-        <li>Send your Telegram username to VaultX Support for registration.</li>
-        <li>Confirm your membership and start earning monthly profits.</li>
-      </ol>
+      <h2>1. Prepare Your Capital</h2>
+      <p>Minimum entry capital: <b>100 USDT</b>. Choose your tier and plan your strategy.</p>
     </div>
 
     <div class="card">
-      <h2>📲 Contact VaultX</h2>
+      <h2>2. Contact the VaultX Team</h2>
       <p>
-        📲 <a href="https://t.me/VaultXClub" target="_blank">Official VaultX Channel</a><br>
-        🤝 <a href="https://t.me/CEOVaultX" target="_blank">Contact VaultX Support (CEO)</a>
+        📲 Contact the administration team to receive your unique deposit wallet.<br><br>
+        • Official Channel: <a href="https://t.me/VaultXClub" target="_blank">@VaultXClub</a><br>
+        • Direct CEO Contact: <a href="https://t.me/CEOVaultX" target="_blank">@CEOVaultX</a>
       </p>
     </div>
 
     <div class="card">
-      <h2>🔐 After Registration</h2>
-      <p>
-        Once registered, you will receive login credentials to access your dashboard, track profits, and manage your account.
-      </p>
-      <a class="btn" href="login.html">Go to Login</a>
+      <h2>3. Deposit & Confirm</h2>
+      <p>Send your chosen amount of USDT to the wallet provided by our team and confirm the transaction via Telegram.</p>
+    </div>
+
+    <div class="card">
+      <h2>4. Get Activated</h2>
+      <p>Once your payment is confirmed, your account will be activated and you'll start earning monthly profits immediately.</p>
+    </div>
+
+    <div class="card">
+      <h2>5. (Optional) Upgrade to Elite</h2>
+      <p>Join <a href="elite.html">VaultX Club Elite</a> to unlock daily raffles and exclusive perks.</p>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="faq.html">FAQ</a>
-    <br><br>
-    <small id="legal"></small>
+    © <span id="year"></span> VaultX • 
+    <a href="rules.html">Rules</a> • 
+    <a href="faq.html">FAQ</a>
+    <br><br><small id="legal"></small>
   </div>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
-document.getElementById("legal").textContent = LEGAL_BANNER;
+  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById("legal").textContent = LEGAL_BANNER;
 </script>
 </body>
 </html>

@@ -5,63 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX Dashboard</title>
 
+  <!-- Fonts + CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
+
+  <!-- Supabase + Config -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/config.js"></script>
 
   <style>
-    .data-card {
-      margin-bottom: 25px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-    th, td {
-      padding: 10px;
-      border: 1px solid #333;
-      text-align: left;
-    }
-    th {
-      background: #111;
-      color: #d4af37;
-      text-transform: uppercase;
-    }
+    .data-card { margin-bottom: 25px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { padding: 10px; border: 1px solid #333; text-align: left; }
+    th { background: #111; color: #d4af37; text-transform: uppercase; }
     td input, td select {
-      width: 100%;
-      background: #111;
-      border: 1px solid #555;
-      color: white;
-      padding: 4px;
+      width: 100%; background: #111; border: 1px solid #555;
+      color: white; padding: 4px;
     }
     .admin-section {
       margin-top: 40px;
       border-top: 2px solid #d4af37;
       padding-top: 25px;
     }
-    .refresh-btn, .logout-btn {
-      background:#d4af37;
-      color:#111;
-      padding:8px 15px;
-      border:none;
-      border-radius:5px;
-      margin-bottom:15px;
-      cursor:pointer;
-      font-weight:600;
-      margin-right: 10px;
-    }
-    .top-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    #logoutMsg {
-      color:#d4af37;
-      margin-left: 15px;
-      font-weight:600;
+    .logout {
+      float: right;
+      font-size: 14px;
+      color: #d4af37;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -76,44 +46,34 @@
       <a href="rules.html">Rules</a>
       <a href="faq.html">FAQ</a>
       <a href="join.html">Join</a>
-      <a href="login.html">Login</a>
       <a href="dashboard.html" class="active">Dashboard</a>
     </div>
   </div>
 
-  <!-- HERO -->
+  <!-- DASHBOARD -->
   <div class="container">
-    <div class="hero top-actions">
-      <div>
-        <h1>📊 VaultX Dashboard</h1>
-        <p>Your personal VaultX account overview.</p>
-      </div>
-      <div>
-        <button class="logout-btn" onclick="logout()">🚪 Logout</button>
-        <span id="logoutMsg"></span>
-      </div>
+    <div class="hero">
+      <h1>📊 VaultX Dashboard</h1>
+      <span class="logout" onclick="logout()">🚪 Logout</span>
+      <p>Welcome to your personal member area.</p>
     </div>
-  </div>
 
-  <!-- USER DASHBOARD -->
-  <div class="container">
-    <div class="card data-card" id="userData">
-      ⏳ Loading your account data...
+    <div class="card data-card" id="memberCard">
+      ⏳ Loading your data...
     </div>
 
     <div class="card admin-section" id="adminPanel" style="display:none;">
-      <h2>🛠 Admin Panel</h2>
-      <button class="refresh-btn" onclick="loadAllMembers()">🔄 Refresh Data</button>
-      <table>
+      <h2>👑 Admin Panel</h2>
+      <button class="btn" onclick="loadAllMembers()">🔄 Refresh Data</button>
+      <table class="table">
         <thead>
           <tr>
             <th>Email</th>
             <th>Capital</th>
             <th>Tier</th>
             <th>Expected Profit</th>
-            <th>Elite</th>
             <th>Status</th>
-            <th>Joined</th>
+            <th>Elite</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -124,29 +84,62 @@
 
   <!-- FOOTER -->
   <div class="footer">
-    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="faq.html">FAQ</a>
-    <br><br>
-    <small id="legal"></small>
+    © <span id="year"></span> VaultX • 
+    <a href="rules.html">Rules</a> • 
+    <a href="faq.html">FAQ</a>
+    <br><br><small id="legal"></small>
   </div>
 
 <script>
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
 document.getElementById("year").textContent = new Date().getFullYear();
 document.getElementById("legal").textContent = LEGAL_BANNER;
 
-let sessionUser = null;
-
-init();
-
-async function init() {
+async function loadMember() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
-    document.getElementById("userData").innerHTML = "⚠️ Please <a href='login.html'>login</a> first.";
+    document.getElementById("memberCard").innerHTML = "⚠️ Please login first.";
     return;
   }
-  sessionUser = user;
-  loadUserData(user.email);
+
+  const { data, error } = await supabase
+    .from("members")
+    .select("*")
+    .eq("email", user.email)
+    .single();
+
+  if (error || !data) {
+    document.getElementById("memberCard").innerHTML = "⚠️ Unable to load your member data. Please contact support.";
+    return;
+  }
+
+  if (data.status !== "active") {
+    document.getElementById("memberCard").innerHTML = `
+      <h2>⏳ Account Pending</h2>
+      <p>Your account is not yet activated by the VaultX team.<br>Please wait for confirmation or contact support.</p>
+    `;
+    return;
+  }
+
+  const tier = VAULTX_TIERS.filter(t => data.capital >= t.capital).pop();
+  const gross = data.capital * tier.pct;
+
+  document.getElementById("memberCard").innerHTML = `
+    <h2>👤 Welcome, ${data.email}</h2>
+    <p>Status: <b>${data.status}</b></p>
+    <p>💼 Investment Overview</p>
+    <ul>
+      <li>Current Capital: <b>${data.capital} USDT</b></li>
+      <li>Current Tier: <b>${tier.capital}</b></li>
+      <li>Expected Monthly Profit: <b>${gross.toFixed(2)} USDT</b></li>
+      <li>Elite Member: <b>${data.elite_status ? "Yes" : "No"}</b></li>
+    </ul>
+    <p>🔐 Account Info</p>
+    <ul>
+      <li>Email: ${data.email}</li>
+      <li>Joined on: ${new Date(data.join_date).toLocaleDateString()}</li>
+    </ul>
+  `;
 
   if (user.email === "vaultxclub@gmail.com") {
     document.getElementById("adminPanel").style.display = "block";
@@ -154,44 +147,8 @@ async function init() {
   }
 }
 
-async function loadUserData(email) {
-  const { data, error } = await supabase.from("members").select("*").eq("email", email).single();
-  if (error || !data) {
-    document.getElementById("userData").innerHTML = "⚠️ Unable to load your member data. Please contact <a href='https://t.me/CEOVaultX' target='_blank'>VaultX Support</a>.";
-    return;
-  }
-
-  if (data.status !== "active") {
-    document.getElementById("userData").innerHTML = `
-      ⏳ Account Pending<br>
-      Your account is not yet activated by the VaultX team.<br>
-      Please wait for confirmation or contact support.
-    `;
-    return;
-  }
-
-  document.getElementById("userData").innerHTML = `
-    <h2>👤 Welcome, ${data.email}</h2>
-    <p>Status: <b>${data.status}</b></p>
-    <h3>💼 Investment Overview</h3>
-    <p>
-      Current Capital: <b>${data.capital} USDT</b><br>
-      Current Tier: <b>${data.tier}</b><br>
-      Expected Monthly Profit: <b>${data.expected_profit?.toFixed(2) ?? "N/A"} USDT</b><br>
-      Elite Member: <b>${data.elite_status ? "Yes" : "No"}</b>
-    </p>
-    <h3>🔐 Account Info</h3>
-    <p>
-      Email: ${data.email}<br>
-      Joined on: ${new Date(data.join_date).toLocaleDateString()}
-    </p>
-  `;
-}
-
 async function loadAllMembers() {
-  const { data, error } = await supabase.from("members").select("*").order("join_date", { ascending: false });
-  if (error) return;
-
+  const { data, error } = await supabase.from("members").select("*");
   const tbody = document.getElementById("membersTable");
   tbody.innerHTML = "";
 
@@ -200,21 +157,20 @@ async function loadAllMembers() {
     tr.innerHTML = `
       <td>${m.email}</td>
       <td><input type="number" value="${m.capital}" onchange="updateMember('${m.id}','capital',this.value)"></td>
-      <td>${m.tier}</td>
-      <td>${m.expected_profit?.toFixed(2) ?? "N/A"}</td>
-      <td>
-        <select onchange="updateMember('${m.id}','elite_status',this.value)">
-          <option value="false" ${!m.elite_status ? "selected":""}>No</option>
-          <option value="true" ${m.elite_status ? "selected":""}>Yes</option>
-        </select>
-      </td>
+      <td>${m.tier || '-'}</td>
+      <td>${(m.capital * (VAULTX_TIERS.filter(t=>m.capital>=t.capital).pop().pct)).toFixed(2)}</td>
       <td>
         <select onchange="updateMember('${m.id}','status',this.value)">
-          <option value="pending" ${m.status==="pending"?"selected":""}>Pending</option>
-          <option value="active" ${m.status==="active"?"selected":""}>Active</option>
+          <option ${m.status==='pending'?'selected':''}>pending</option>
+          <option ${m.status==='active'?'selected':''}>active</option>
         </select>
       </td>
-      <td>${new Date(m.join_date).toLocaleDateString()}</td>
+      <td>
+        <select onchange="updateMember('${m.id}','elite_status',this.value==='true')">
+          <option value="false" ${!m.elite_status?'selected':''}>No</option>
+          <option value="true" ${m.elite_status?'selected':''}>Yes</option>
+        </select>
+      </td>
       <td><button onclick="deleteMember('${m.id}')">🗑</button></td>
     `;
     tbody.appendChild(tr);
@@ -222,21 +178,23 @@ async function loadAllMembers() {
 }
 
 async function updateMember(id, field, value) {
-  const parsedValue = field === "elite_status" ? (value === "true") : value;
-  await supabase.from("members").update({ [field]: parsedValue }).eq("id", id);
-  loadAllMembers();
+  const { error } = await supabase.from("members").update({ [field]: value }).eq("id", id);
+  if (!error) loadAllMembers();
 }
 
 async function deleteMember(id) {
-  await supabase.from("members").delete().eq("id", id);
-  loadAllMembers();
+  if (!confirm("Are you sure?")) return;
+  const { error } = await supabase.from("members").delete().eq("id", id);
+  if (!error) loadAllMembers();
 }
 
 async function logout() {
   await supabase.auth.signOut();
-  document.getElementById("logoutMsg").textContent = "✅ Logged out successfully";
-  setTimeout(() => window.location.href = "login.html", 1000);
+  alert("✅ Logged out successfully");
+  window.location.href = "login.html";
 }
+
+loadMember();
 </script>
 </body>
 </html>

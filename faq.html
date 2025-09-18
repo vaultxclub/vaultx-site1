@@ -5,20 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX FAQ</title>
 
+  <!-- Fonts + CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
-  <script src="assets/config.js"></script>
 
-  <style>
-    .faq h2 {
-      color: #d4af37;
-      margin-top: 25px;
-    }
-    .faq p {
-      margin-top: 5px;
-      line-height: 1.7;
-    }
-  </style>
+  <!-- Config JS -->
+  <script src="assets/config.js"></script>
 </head>
 <body>
   <!-- NAVBAR -->
@@ -31,61 +23,78 @@
       <a href="rules.html">Rules</a>
       <a href="faq.html" class="active">FAQ</a>
       <a href="join.html">Join</a>
+      <a href="login.html">Login</a>
     </div>
   </div>
 
   <!-- HERO -->
   <div class="container">
     <div class="hero">
-      <h1>❓ VaultX Frequently Asked Questions</h1>
-      <p>Find answers to the most common questions about VaultX Club.</p>
+      <h1>❓ Frequently Asked Questions</h1>
+      <p>Find answers about how VaultX works and how you can join.</p>
     </div>
   </div>
 
   <!-- FAQ CONTENT -->
-  <div class="container faq">
+  <div class="container">
     <div class="card">
       <h2>1. What is VaultX Investment Club?</h2>
-      <p>VaultX is a private members-only investment club offering 10–40% monthly returns with capital protection.</p>
+      <p>VaultX is a private, members-only investment club offering 10% to 40% monthly returns with capital protection, transparency, and elite community perks.</p>
+    </div>
 
-      <h2>2. What is the minimum capital required?</h2>
-      <p>The minimum entry capital is <b>100 USDT</b>.</p>
+    <div class="card">
+      <h2>2. How much capital do I need to join?</h2>
+      <p>The minimum entry capital is <b>100 USDT</b>. You can increase your capital anytime to move to higher profit tiers.</p>
+    </div>
 
-      <h2>3. Are profits guaranteed?</h2>
-      <p>No. Profits are targeted but not guaranteed. Capital is protected unless the fund suffers losses.</p>
+    <div class="card">
+      <h2>3. How does the profit system work?</h2>
+      <p>Profits are distributed monthly based on your tier. Gross profits range from 10% to 40%, with a 10% management fee and 10% withdrawal fee.</p>
+    </div>
 
-      <h2>4. How do monthly fees work?</h2>
-      <p>10% management fee on profits and 10% withdrawal fee on monthly withdrawals. Early withdrawals cost an extra 20%.</p>
+    <div class="card">
+      <h2>4. What is VaultX Club Elite?</h2>
+      <p>
+        Elite is our VIP layer with exclusive daily raffles and benefits.<br>
+        Price: <b><span id="elitePrice"></span> USDT/month</b><br>
+        Daily raffle: <b><span id="raffle"></span> USDT</b> — 1 prize for every <b><span id="perMembers"></span></b> members.
+      </p>
+    </div>
 
-      <h2>5. What is VaultX Elite?</h2>
-      <p>Elite is the VIP layer of VaultX. Members pay <b><span id="elitePrice"></span> USDT/month</b> and join daily raffles of <b><span id="raffle"></span> USDT</b> each, with 1 raffle for every <b><span id="perMembers"></span></b> active Elite members.</p>
+    <div class="card">
+      <h2>5. How can I withdraw my profits?</h2>
+      <p>Withdrawals are allowed once per month. Unclaimed profits are automatically reinvested (compounded) unless withdrawn.</p>
+    </div>
 
-      <h2>6. Can I withdraw profits anytime?</h2>
-      <p>Withdrawals are allowed monthly. Early withdrawals are possible with a 20% fee.</p>
+    <div class="card">
+      <h2>6. Can I lose my initial capital?</h2>
+      <p>The initial capital is guaranteed and only refunded in case of fund losses or club closure.</p>
+    </div>
 
+    <div class="card">
       <h2>7. How do I contact VaultX directly?</h2>
       <p>
-        📲 <a href="https://t.me/VaultXClub" target="_blank">Official VaultX Channel</a><br>
-        🤝 <a href="https://t.me/CEOVaultX" target="_blank">Contact VaultX CEO</a>
+        📲 Official Telegram Channel: <a href="https://t.me/VaultXClub" target="_blank">@VaultXClub</a><br>
+        🤝 Direct CEO Contact: <a href="https://t.me/CEOVaultX" target="_blank">@CEOVaultX</a>
       </p>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
-    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="join.html">Join</a>
-    <br><br>
-    <small id="legal"></small>
+    © <span id="year"></span> VaultX • 
+    <a href="rules.html">Rules</a> • 
+    <a href="join.html">Join</a>
+    <br><br><small id="legal"></small>
   </div>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
-document.getElementById("legal").textContent = LEGAL_BANNER;
+  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById("legal").textContent = LEGAL_BANNER;
 
-// Inserăm valorile Elite din config.js
-document.getElementById("elitePrice").textContent = ELITE_PRICE;
-document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
-document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
+  document.getElementById("elitePrice").textContent = ELITE_PRICE;
+  document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
+  document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
 </script>
 </body>
 </html>

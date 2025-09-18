@@ -5,17 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VaultX Investment Club</title>
 
-  <!-- Fonts -->
+  <!-- Fonts + CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Config -->
+  <!-- Config JS -->
   <script src="assets/config.js"></script>
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- NAVBAR -->
   <div class="nav">
     <div class="logo">VAULTX</div>
     <div>
@@ -26,7 +24,6 @@
       <a href="faq.html">FAQ</a>
       <a href="join.html">Join</a>
       <a href="login.html">Login</a>
-      <a href="dashboard.html">Dashboard</a>
     </div>
   </div>
 
@@ -40,10 +37,6 @@
         Exclusive. Transparent. Global.
       </p>
       <a class="btn" href="join.html">🚀 Become a Member</a>
-      <p style="margin-top:12px;font-size:15px;">
-        📲 <a href="https://t.me/VaultXClub" target="_blank">Official Channel</a> • 
-        🤝 <a href="https://t.me/CEOVaultX" target="_blank">Direct CEO Contact</a>
-      </p>
     </div>
   </div>
 
@@ -71,37 +64,37 @@
         <li>Elite Subscription: <b><span id="elitePrice"></span> USDT/month</b></li>
         <li>Daily raffle: <b><span id="raffle"></span> USDT</b> per prize</li>
         <li>1 prize for every <b><span id="perMembers"></span></b> active members</li>
-        <li>Pay directly from your monthly profits</li>
       </ul>
       <a class="btn" href="elite.html">Discover Elite</a>
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <div class="footer">
-    © <span id="year"></span> VaultX • <a href="rules.html">Rules</a> • <a href="join.html">Join</a>
+    © <span id="year"></span> VaultX • 
+    <a href="rules.html">Rules</a> • 
+    <a href="faq.html">FAQ</a>
     <br><br>
     <small id="legal"></small>
   </div>
 
-  <!-- Script -->
-  <script>
-    // Generate tiers table
-    const tbody = document.getElementById("tiers");
-    VAULTX_TIERS.forEach(t=>{
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${t.capital}</td><td>${(t.pct*100).toFixed(0)}%</td>`;
-      tbody.appendChild(tr);
-    });
+<script>
+  // Footer text
+  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById("legal").textContent = LEGAL_BANNER;
 
-    // Elite info from config
-    document.getElementById("elitePrice").textContent = ELITE_PRICE;
-    document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
-    document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
+  // Load tiers
+  const tbody = document.getElementById("tiers");
+  VAULTX_TIERS.forEach(t=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${t.capital}</td><td>${(t.pct*100).toFixed(0)}%</td>`;
+    tbody.appendChild(tr);
+  });
 
-    // Footer
-    document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("legal").textContent = LEGAL_BANNER;
-  </script>
+  // Load elite values
+  document.getElementById("elitePrice").textContent = ELITE_PRICE;
+  document.getElementById("raffle").textContent = ELITE_RAFFLE_PRIZE_USDT;
+  document.getElementById("perMembers").textContent = ELITE_RAFFLE_PER_MEMBERS;
+</script>
 </body>
 </html>
